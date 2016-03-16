@@ -3,34 +3,52 @@ using System.Collections;
 
 public class PlayerController : MonoBehaviour {
 
-
     public float speed = 5f;
-    bool facingRight = true;
-
+   
+    private Rigidbody2D rb;
     private Animator anim;
+    private Touch currTouch;
+    private bool started = false;
+    private int direction = 0;
 
-	void Start () {
+
+    void Start () {
+        rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
 	}
 
 
+    void Update() {
+        if (!started) {
+            if (Input.touchCount > 0 || Input.GetMouseButtonDown(0)) {
+                started = true;
+                direction = 1;
+                anim.SetBool("started", true);
+            }
+        } else {
+            if (Input.touchCount > 0 || Input.GetMouseButtonDown(0)) {
+#if UNITY_EDITOR
+                direction *= -1;
+#elif UNITY_ANDROID
+                if (Input.GetTouch(0).phase == TouchPhase.Began) {
+                    direction *= -1;
+                }
+#endif
+            }
+        }
+    }
+
+
     void FixedUpdate () {
 
-        float move = Input.GetAxis("Horizontal");
-
-        GetComponent<Rigidbody2D>().velocity = new Vector2(move * speed, 0);
-        if (move > 0 && !facingRight) {
-            Flip();
-        } else if (move < 0 && facingRight) {
-            Flip();
-        }
-    
-    }
-
-    void Flip() {
-        facingRight = !facingRight;
+        rb.MovePosition(transform.position + Vector3.right * speed * direction * Time.deltaTime);
         Vector3 theScale = transform.localScale;
-        theScale.x *= -1;
+        if (direction != 0) {
+            theScale.x = direction;
+        }
         transform.localScale = theScale;
+
     }
+
+  
 }
