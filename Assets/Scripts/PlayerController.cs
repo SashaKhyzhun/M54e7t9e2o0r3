@@ -9,7 +9,7 @@ public class PlayerController : MonoBehaviour {
     private Animator anim;
     private Touch currTouch;
     private bool started = false;
-    private int direction = 0;
+    private float direction = 0;
 
 
     void Start () {
@@ -22,7 +22,7 @@ public class PlayerController : MonoBehaviour {
         if (!started) {
             if (Input.touchCount > 0 || Input.GetMouseButtonDown(0)) {
                 started = true;
-                direction = 1;
+                direction = 0.7f;
                 anim.SetBool("started", true);
             }
         } else {
