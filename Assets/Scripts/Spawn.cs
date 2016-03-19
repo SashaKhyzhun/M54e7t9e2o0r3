@@ -3,90 +3,84 @@ using System.Collections;
 
 public class Spawn : MonoBehaviour {
 
-    public GameObject ballPrefab; //ball prefab
-	public bool spawnEnabled = true;
-    [Header ("parameters")]
-	public int poolSize = 2;
+    public GameObject projectilePrefab; //ball prefab
+    public bool spawnEnabled = true;
+    [Header("Pools parameters")]
+    public int poolSize = 2;
     public float spawnRate = 0.5f;
-    public float ballSpeed;
     public float offsetX = 1f;
+    [Header("Projectiles settings")]
     public float minSpeed = 2f;
     public float maxSpeed = 10f;
 
     //private ScoreController scoreController;
-	private GameObject ballPool;
-	private GameObject currBall;
-	private Transform[] balls;
-	private Transform myTransform;
-    private Rigidbody2D currBallRb;
-    //private BallController currBallController;
-	private int currBallIndex;
+    private GameObject ProjectilePool;
+    private GameObject currProjectile;
+    private Transform[] projectiles;
+    private Transform myTransform;
+    private Rigidbody2D currProjectileRb;
+    private MeteorController currProjectileController;
+    private int currProjectileIndex;
     private bool canSpawn = true;
     private float randomX;
     private float extent;
     private float speed;
 
     // Use this for initialization
-    void Start ()
-	{
-		//scoreController = GetComponent<ScoreController>();
-		CreatePool ("BallPool");
-		myTransform = transform;
-		currBallIndex = 0;
+    void Start() {
+        //scoreController = GetComponent<ScoreController>();
+        CreatePool("ProjectilePool");
+        myTransform = transform;
+        currProjectileIndex = 0;
         extent = Camera.main.ScreenToWorldPoint(Vector3.right * Screen.width).x + offsetX;
-	}
-	
-	// Update is called once per frame
-	void Update ()
-	{
-        if (spawnEnabled && canSpawn) { StartCoroutine(SpawnCoroutine()); } // running the coroutine
-
-        
     }
 
-    IEnumerator SpawnCoroutine()
-    {
+    // Update is called once per frame
+    void Update() {
+        if (spawnEnabled && canSpawn) { StartCoroutine(SpawnCoroutine()); } // running the coroutine
+    }
+
+    IEnumerator SpawnCoroutine() {
         // initialization
         canSpawn = false;
-        currBall = ballPool.transform.GetChild(currBallIndex).gameObject;
+        currProjectile = ProjectilePool.transform.GetChild(currProjectileIndex).gameObject;
 
-		//if (!currBall.activeInHierarchy) {
-		currBallRb = currBall.GetComponent<Rigidbody2D> ();
-		currBall.SetActive (true);
+        //if (!currProjectile.activeInHierarchy) {
+        currProjectileRb = currProjectile.GetComponent<Rigidbody2D>();
+        currProjectile.SetActive(true);
 
         // transformation
         randomX = Random.Range(-extent, extent);
         speed = Random.Range(minSpeed, maxSpeed);
-        currBall.transform.position = new Vector3(randomX, myTransform.position.y, myTransform.position.z);
-		currBall.transform.rotation = myTransform.rotation;
-		currBallRb.angularVelocity = 0;
-		currBallRb.velocity = Vector2.down * speed;
+        currProjectile.transform.position = new Vector3(randomX, myTransform.position.y, myTransform.position.z);
+        currProjectile.transform.rotation = myTransform.rotation;
+        currProjectileRb.angularVelocity = 0;
+        currProjectileRb.velocity = Vector2.down * speed;
 
-		// cooldown
-		yield return new WaitForSeconds (spawnRate);
-		//}
+        // cooldown
+        yield return new WaitForSeconds(spawnRate);
+        //}
 
         // ready to go
-        if (currBallIndex < poolSize - 1) { currBallIndex++; } else { currBallIndex = 0; } // if ran out of balls - take the first
+        if (currProjectileIndex < poolSize - 1) { currProjectileIndex++; } else { currProjectileIndex = 0; } // if ran out of balls - take the first
         canSpawn = true;
 
     }
 
-	void CreatePool(string name)
-	{
-		ballPool = new GameObject (); // creating ball pool
-		ballPool.name = name; // naming it
-		ballPool.transform.position = Vector3.up * 10; // setting its position
+    void CreatePool(string name) {
+        ProjectilePool = new GameObject(); // creating ball pool
+        ProjectilePool.name = name; // naming it
+        ProjectilePool.transform.position = Vector3.up * 10; // setting its position
 
-		for (int i = 0; i < poolSize; i++) // populating pool
-		{
-			currBall = (GameObject)Instantiate (ballPrefab); // new ball from prefab
-			currBall.transform.SetParent (ballPool.transform); // parenting to pool
-			currBall.transform.localPosition = Vector3.zero; // teleporting ball to pool's position
-			//currBallController = currBall.GetComponent<BallController>();
-			//currBallController.scoreController = scoreController;
-			currBall.SetActive(false); // deactivating for now
-		}
-		currBall = null; // must be null for further actions (in case)
-	}
+        for (int i = 0; i < poolSize; i++) // populating pool
+        {
+            currProjectile = (GameObject)Instantiate(projectilePrefab); // new ball from prefab
+            currProjectile.transform.SetParent(ProjectilePool.transform); // parenting to pool
+            currProjectile.transform.localPosition = Vector3.zero; // teleporting ball to pool's position
+            currProjectileController = currProjectile.GetComponent<MeteorController>();
+            //currBallController.scoreController = scoreController;
+            currProjectile.SetActive(false); // deactivating for now
+        }
+        currProjectile = null; // must be null for further actions (in case)
+    }
 }
