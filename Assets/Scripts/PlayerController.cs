@@ -28,14 +28,13 @@ public class PlayerController : MonoBehaviour {
     }
 
         void Update() {
-        if (!started) {
-            if (Input.touchCount > 0 || Input.GetMouseButtonDown(0)) {
-                started = true;
-                direction = 0.7f;
-                anim.SetBool("started", true);
-            }
-           
-        } else {
+            if (!started) {
+                 if (Input.touchCount > 0 || Input.GetMouseButtonDown(0)) {
+                     started = true;
+                     direction = 0.7f;
+                     anim.SetBool("started", true);
+                 }
+            } else {
             if (Input.touchCount > 0 || Input.GetMouseButtonDown(0)) {
 #if UNITY_EDITOR
                 direction *= -1;
