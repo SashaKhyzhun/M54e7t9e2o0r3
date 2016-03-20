@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour {
     private Animator anim;
     private Touch currTouch;
     private bool started = false;
+    private bool dead = false;
     private float direction = 0;
 
 
@@ -17,14 +18,23 @@ public class PlayerController : MonoBehaviour {
         anim = GetComponent<Animator>();
 	}
 
+    void OnCollisionEnter2D(Collision2D collision) {
+        if (collision.gameObject.CompareTag("Dangerous")) {
+            if (dead == false) {
+                dead = true;
+                anim.SetBool("dead", true);
+            }
+        }
+    }
 
-    void Update() {
+        void Update() {
         if (!started) {
             if (Input.touchCount > 0 || Input.GetMouseButtonDown(0)) {
                 started = true;
                 direction = 0.7f;
                 anim.SetBool("started", true);
             }
+           
         } else {
             if (Input.touchCount > 0 || Input.GetMouseButtonDown(0)) {
 #if UNITY_EDITOR
