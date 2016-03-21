@@ -4,16 +4,20 @@ using System.Collections;
 public class PlayerController : MonoBehaviour {
 
     public float speed = 5f;
-   
+
+    private InputHeandler inputHeandler;
+    private PlayerController playerController;
     private Rigidbody2D rb;
     private Animator anim;
     private Touch currTouch;
-    private bool started = false;
+    private bool canStart = true;
+    private bool canFlip = true;
     private bool dead = false;
     private float direction = 0;
 
-
     void Start () {
+        inputHeandler = GetComponent<InputHeandler>();
+        playerController = GetComponent<PlayerController>();
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
 	}
@@ -27,36 +31,26 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
-        void Update() {
-            if (!started) {
-                 if (Input.touchCount > 0 || Input.GetMouseButtonDown(0)) {
-                     started = true;
-                     direction = 0.7f;
-                     anim.SetBool("started", true);
-                 }
-            } else {
-            if (Input.touchCount > 0 || Input.GetMouseButtonDown(0)) {
-#if UNITY_EDITOR
-                direction *= -1;
-#elif UNITY_ANDROID
-                if (Input.GetTouch(0).phase == TouchPhase.Began) {
-                    direction *= -1;
-                }
-#endif
+    void Update() {
+        if (canStart) {
+            if (inputHeandler.started) {
+                direction = -0.7f;
+                anim.SetBool("started", true);
+                canStart = false;
             }
         }
+            if (inputHeandler.touched) {
+                direction *= -1;
+          }
     }
 
-
     void FixedUpdate () {
-
         rb.MovePosition(transform.position + Vector3.right * speed * direction * Time.deltaTime);
         Vector3 theScale = transform.localScale;
         if (direction != 0) {
             theScale.x = direction;
         }
         transform.localScale = theScale;
-
     }
 
   

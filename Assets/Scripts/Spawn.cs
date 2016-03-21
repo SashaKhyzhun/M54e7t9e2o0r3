@@ -19,7 +19,8 @@ public class Spawn : MonoBehaviour {
     private Transform[] projectiles;
     private Transform myTransform;
     private Rigidbody2D currProjectileRb;
-    private MeteorController currProjectileController;
+    private ProjectileController currProjectileController;
+    private PlayerController playerController;
     private int currProjectileIndex;
     private bool canSpawn = true;
     private float randomX;
@@ -45,6 +46,7 @@ public class Spawn : MonoBehaviour {
         canSpawn = false;
         currProjectile = ProjectilePool.transform.GetChild(currProjectileIndex).gameObject;
 
+        //if (playerController.GetComponents<Animator>() != dead)
         //if (!currProjectile.activeInHierarchy) {
         currProjectileRb = currProjectile.GetComponent<Rigidbody2D>();
         currProjectile.SetActive(true);
@@ -77,8 +79,8 @@ public class Spawn : MonoBehaviour {
             currProjectile = (GameObject)Instantiate(projectilePrefab); // new ball from prefab
             currProjectile.transform.SetParent(ProjectilePool.transform); // parenting to pool
             currProjectile.transform.localPosition = Vector3.zero; // teleporting ball to pool's position
-            currProjectileController = currProjectile.GetComponent<MeteorController>();
-            //currBallController.scoreController = scoreController;
+            currProjectileController = currProjectile.GetComponent<ProjectileController>();
+            //currProjectileController.scoreController = scoreController;
             currProjectile.SetActive(false); // deactivating for now
         }
         currProjectile = null; // must be null for further actions (in case)

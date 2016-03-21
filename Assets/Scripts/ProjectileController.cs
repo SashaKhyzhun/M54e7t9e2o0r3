@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class MeteorController : MonoBehaviour {
+public class ProjectileController : MonoBehaviour {
 
     //public ScoreController scoreController;
 
