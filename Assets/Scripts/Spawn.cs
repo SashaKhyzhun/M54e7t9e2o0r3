@@ -4,6 +4,7 @@ using System.Collections;
 public class Spawn : MonoBehaviour {
 
     public GameObject projectilePrefab; //ball prefab
+    public InputHeandler inputHeandler;
     public bool spawnEnabled = true;
     [Header("Pools parameters")]
     public int poolSize = 2;
@@ -29,7 +30,7 @@ public class Spawn : MonoBehaviour {
 
     // Use this for initialization
     void Start() {
-        //scoreController = GetComponent<ScoreController>();
+        //scoreController = GetComponent<ScoreController
         CreatePool("ProjectilePool");
         myTransform = transform;
         currProjectileIndex = 0;
@@ -38,6 +39,11 @@ public class Spawn : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
+        if (!spawnEnabled) {
+            if (inputHeandler.started) {
+                spawnEnabled = true;
+            }
+        }
         if (spawnEnabled && canSpawn) { StartCoroutine(SpawnCoroutine()); } // running the coroutine
     }
 
