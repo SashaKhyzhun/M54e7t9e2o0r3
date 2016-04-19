@@ -13,9 +13,9 @@ public class ProjectileController : MonoBehaviour {
         lifeSpanWFS = new WaitForSeconds(lifeSpan);
     }
 
-    void OnCollisionEnter2D(Collision2D collision) {
-        Kill();
-    }
+//    void OnCollisionEnter2D(Collision2D collision) {
+//        Kill();
+//    }
 
     void OnEnable() {
         StartCoroutine(Live()); // if enabled - begin to live;
@@ -30,7 +30,7 @@ public class ProjectileController : MonoBehaviour {
         Kill(); // the only purpose of life is death
     }
 
-    void Kill() {
+    protected virtual void Kill() {
         gameObject.SetActive(false); // not very interesting death
     }
 

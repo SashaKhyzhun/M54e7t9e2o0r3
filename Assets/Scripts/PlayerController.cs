@@ -30,20 +30,6 @@ public class PlayerController : MonoBehaviour {
         anim = GetComponent<Animator>();
 	}
 
-    void OnCollisionEnter2D(Collision2D collision) {
-        if (collision.gameObject.CompareTag("Dangerous")) {
-            if (dead == false) {
-                dead = true;
-				anim.SetBool("dead", true);
-            }
-        }
-
-        if (collision.gameObject.CompareTag("Coin")) {
-            Debug.Log("MONETKA TOCHED");
-            scoreController.ScoreUp();
-        }
-    }
-
     void Update() {
         if (canStart) {
             if (inputHeandler.started) {
@@ -58,13 +44,25 @@ public class PlayerController : MonoBehaviour {
     }
 
     void FixedUpdate () {
-        rb.MovePosition(transform.position + Vector3.right * speed * direction * Time.deltaTime);
-        Vector3 theScale = transform.localScale;
-        if (direction != 0) {
-            theScale.x = direction;
-        }
-        transform.localScale = theScale;
+		if (!dead) {
+			rb.MovePosition (transform.position + Vector3.right * speed * direction * Time.deltaTime);
+		}
+		if (canFlip) {
+			Vector3 theScale = transform.localScale;
+			if (direction != 0) {
+				theScale.x = direction;
+			}
+			transform.localScale = theScale;
+		}
     }
+
+	public void Die() {
+		if (!dead) {
+			dead = true;
+			anim.SetBool("dead", true);
+			canFlip = false; //test test test grabli
+		} 
+	}
 
   
 }

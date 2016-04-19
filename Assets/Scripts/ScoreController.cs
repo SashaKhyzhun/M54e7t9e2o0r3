@@ -3,29 +3,36 @@ using UnityEngine.UI;
 
 public class ScoreController : MonoBehaviour {
 
-    public Text scoreText;
+	public Spawn coinSpawn, meteorSpawn;
+    public Text coinText, meteorText;
 
-    private int score;
+	private int coinScore;
+	private int meteorScore;
     
     void Start() {
-        score = 0;
-        SetText();
+        coinScore = 0;
+		meteorScore = 0;
+		SetText(coinText, coinScore);
+		SetText (meteorText, meteorScore);
     }
     
-	public void ScoreUp()
-	{
-		++score;
-		SetText ();
+	public void CoinScoreUp() {
+		SetText(coinText, ++coinScore);
 	}
 
-	public void Wasted()
-	{
-		score = 0;
-		SetText ();
+	public void MeteorScoreUp() {
+		SetText(meteorText, ++meteorScore);
 	}
 
-	void SetText() {
-		scoreText.text = score + "";
+	public void Wasted() {
+		coinSpawn.spawnEnabled = false;
+		meteorSpawn.spawnEnabled = false;
+		meteorScore = 0;
+		SetText (meteorText, meteorScore);
+	}
+
+	void SetText(Text text, int score) {
+		text.text = score + "";
 	}
  
 }

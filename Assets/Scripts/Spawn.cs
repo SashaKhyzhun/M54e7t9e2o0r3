@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Spawn : MonoBehaviour {
 
-    //public ScoreController scoreController;
+    public ScoreController scoreController;
     public GameObject projectilePrefab; //ball prefab
     public InputHeandler inputHeandler;
     public bool spawnEnabled = true;
@@ -43,12 +43,15 @@ public class Spawn : MonoBehaviour {
                 spawnEnabled = true;
             }
         }
-        if (spawnEnabled && canSpawn) { StartCoroutine(SpawnCoroutine()); } // running the coroutine
+        if (spawnEnabled && canSpawn) { 
+			StartCoroutine(SpawnCoroutine()); 
+		} // running the coroutine
     }
 
     IEnumerator SpawnCoroutine() {
         // initialization
         canSpawn = false;
+		yield return new WaitForSeconds(spawnRate);
         currProjectile = ProjectilePool.transform.GetChild(currProjectileIndex).gameObject;
 
         //if (playerController.GetComponent<Animation>() != dead ) {
@@ -65,7 +68,6 @@ public class Spawn : MonoBehaviour {
             currProjectileRb.velocity = Vector2.down * speed;
 
             // cooldown
-            yield return new WaitForSeconds(spawnRate);
             //}
 
             // ready to go
@@ -86,7 +88,7 @@ public class Spawn : MonoBehaviour {
             currProjectile.transform.SetParent(ProjectilePool.transform); // parenting to pool
             currProjectile.transform.localPosition = Vector3.zero; // teleporting ball to pool's position
             currProjectileController = currProjectile.GetComponent<ProjectileController>();
-            //currProjectileController.scoreController = scoreController;
+            currProjectileController.scoreController = scoreController;
             currProjectile.SetActive(false); // deactivating for now
         }
         currProjectile = null; // must be null for further actions (in case)
