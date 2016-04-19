@@ -3,6 +3,7 @@ using System.Collections;
 
 public class Spawn : MonoBehaviour {
 
+    //public ScoreController scoreController;
     public GameObject projectilePrefab; //ball prefab
     public InputHeandler inputHeandler;
     public bool spawnEnabled = true;
@@ -14,7 +15,6 @@ public class Spawn : MonoBehaviour {
     public float minSpeed = 2f;
     public float maxSpeed = 10f;
 
-    //private ScoreController scoreController;
     private GameObject ProjectilePool;
     private GameObject currProjectile;
     private Transform[] projectiles;
@@ -30,7 +30,6 @@ public class Spawn : MonoBehaviour {
 
     // Use this for initialization
     void Start() {
-        //scoreController = GetComponent<ScoreController
         CreatePool("ProjectilePool");
         myTransform = transform;
         currProjectileIndex = 0;
@@ -52,26 +51,27 @@ public class Spawn : MonoBehaviour {
         canSpawn = false;
         currProjectile = ProjectilePool.transform.GetChild(currProjectileIndex).gameObject;
 
-        //if (playerController.GetComponents<Animator>() != dead)
-        //if (!currProjectile.activeInHierarchy) {
-        currProjectileRb = currProjectile.GetComponent<Rigidbody2D>();
-        currProjectile.SetActive(true);
+        //if (playerController.GetComponent<Animation>() != dead ) {
+            //if (!currProjectile.activeInHierarchy) {
+            currProjectileRb = currProjectile.GetComponent<Rigidbody2D>();
+            currProjectile.SetActive(true);
 
-        // transformation
-        randomX = Random.Range(-extent, extent);
-        speed = Random.Range(minSpeed, maxSpeed);
-        currProjectile.transform.position = new Vector3(randomX, myTransform.position.y, myTransform.position.z);
-        currProjectile.transform.rotation = myTransform.rotation;
-        currProjectileRb.angularVelocity = 0;
-        currProjectileRb.velocity = Vector2.down * speed;
+            // transformation
+            randomX = Random.Range(-extent, extent);
+            speed = Random.Range(minSpeed, maxSpeed);
+            currProjectile.transform.position = new Vector3(randomX, myTransform.position.y, myTransform.position.z);
+            currProjectile.transform.rotation = myTransform.rotation;
+            currProjectileRb.angularVelocity = 0;
+            currProjectileRb.velocity = Vector2.down * speed;
 
-        // cooldown
-        yield return new WaitForSeconds(spawnRate);
-        //}
+            // cooldown
+            yield return new WaitForSeconds(spawnRate);
+            //}
 
-        // ready to go
-        if (currProjectileIndex < poolSize - 1) { currProjectileIndex++; } else { currProjectileIndex = 0; } // if ran out of balls - take the first
-        canSpawn = true;
+            // ready to go
+            if (currProjectileIndex < poolSize - 1) { currProjectileIndex++; } else { currProjectileIndex = 0; } // if ran out of balls - take the first
+            canSpawn = true;
+        //} 
 
     }
 

@@ -14,7 +14,7 @@ public class ScoreController : MonoBehaviour {
     
 	public void ScoreUp()
 	{
-		score++;
+		++score;
 		SetText ();
 	}
 
@@ -27,5 +27,5 @@ public class ScoreController : MonoBehaviour {
 	void SetText() {
 		scoreText.text = score + "";
 	}
-
+ 
 }

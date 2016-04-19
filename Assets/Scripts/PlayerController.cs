@@ -3,19 +3,27 @@ using System.Collections;
 
 public class PlayerController : MonoBehaviour {
 
-    public float speed = 5f;
+	public ScoreController scoreController;
 
+    public float speed = 5f;
+   
     private InputHeandler inputHeandler;
     private PlayerController playerController;
     private Rigidbody2D rb;
     private Animator anim;
     private Touch currTouch;
+    private Spawn spawn;
+
+    private bool dead = false;
     private bool canStart = true;
     private bool canFlip = true;
-    private bool dead = false;
     private float direction = 0;
 
     void Start () {
+        spawn = GetComponent<Spawn>();
+		if (scoreController == null) {
+			scoreController = GetComponent<ScoreController> ();
+		}
         inputHeandler = GetComponent<InputHeandler>();
         playerController = GetComponent<PlayerController>();
         rb = GetComponent<Rigidbody2D>();
@@ -26,8 +34,13 @@ public class PlayerController : MonoBehaviour {
         if (collision.gameObject.CompareTag("Dangerous")) {
             if (dead == false) {
                 dead = true;
-                anim.SetBool("dead", true);
+				anim.SetBool("dead", true);
             }
+        }
+
+        if (collision.gameObject.CompareTag("Coin")) {
+            Debug.Log("MONETKA TOCHED");
+            scoreController.ScoreUp();
         }
     }
 
