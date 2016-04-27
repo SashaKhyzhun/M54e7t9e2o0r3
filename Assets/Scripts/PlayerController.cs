@@ -33,7 +33,7 @@ public class PlayerController : MonoBehaviour {
     void Update() {
         if (canStart) {
             if (inputHeandler.started) {
-                direction = -0.7f;
+                direction = -1f;
                 anim.SetBool("started", true);
                 canStart = false;
             }
