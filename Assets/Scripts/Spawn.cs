@@ -4,19 +4,23 @@ using System.Collections;
 public class Spawn : MonoBehaviour {
 
     public ScoreController scoreController;
-    public GameObject projectilePrefab; //ball prefab
+    public GameObject projectilePrefab; //meteor prefab
     public InputHeandler inputHeandler;
     public bool spawnEnabled = true;
     [Header("Pools parameters")]
     public int poolSize = 2;
     public float spawnRate = 0.5f;
     public float offsetX = 1f;
-    [Header("Projectiles settings")]
+    [Header("Meteor settings")]
     public float minSpeed = 2f;
     public float maxSpeed = 10f;
+	[Header("Spawn Object Settings")]
+	public float minTimeSpawn = 12f;
+	public float maxTimeSpawn = 30f;
 
-    private GameObject ProjectilePool;
-    private GameObject currProjectile;
+
+    private GameObject ProjectilePool;	//pool meteora
+    private GameObject currProjectile;	//meteor, coin
     private Transform[] projectiles;
     private Transform myTransform;
     private Rigidbody2D currProjectileRb;
@@ -24,9 +28,9 @@ public class Spawn : MonoBehaviour {
     private PlayerController playerController;
     private int currProjectileIndex;
     private bool canSpawn = true;
-    private float randomX;
-    private float extent;
-    private float speed;
+    private float randomX; //рандом падіння метеора по Х.
+    private float extent; //виход за камеру
+    private float speed; // speed :D
 
     // Use this for initialization
     void Start() {
@@ -54,7 +58,6 @@ public class Spawn : MonoBehaviour {
 		yield return new WaitForSeconds(spawnRate);
         currProjectile = ProjectilePool.transform.GetChild(currProjectileIndex).gameObject;
 
-        //if (playerController.GetComponent<Animation>() != dead ) {
             //if (!currProjectile.activeInHierarchy) {
             currProjectileRb = currProjectile.GetComponent<Rigidbody2D>();
             currProjectile.SetActive(true);
@@ -62,6 +65,7 @@ public class Spawn : MonoBehaviour {
             // transformation
             randomX = Random.Range(-extent, extent);
             speed = Random.Range(minSpeed, maxSpeed);
+			spawnRate = Random.Range(minTimeSpawn, maxTimeSpawn);
             currProjectile.transform.position = new Vector3(randomX, myTransform.position.y, myTransform.position.z);
             currProjectile.transform.rotation = myTransform.rotation;
             currProjectileRb.angularVelocity = 0;
