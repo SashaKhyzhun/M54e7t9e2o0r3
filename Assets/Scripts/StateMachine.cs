@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public enum States { Start, Menu, Shop, Game, GameOver }
+public enum States { Start, Menu, Shop, Game, GameOver, Intermediate }
 
 public class StateMachine : MonoBehaviour {
 
@@ -15,14 +15,16 @@ public class StateMachine : MonoBehaviour {
 
 	private Coroutine currentCoroutine;
 	private WaitForSeconds animWFS;
-	private string animBool = "enabled";
+	private string animBool = "enable";
 
 	void Start() {
 		animWFS = new WaitForSeconds (animationTime);
 	}
 
 	public void StartToMenu() {
-
+		if (currentCoroutine == null) {
+			currentCoroutine = StartCoroutine (StartToMenuCoroutine());
+		}
 	}
 
 	public void MenuToGame() {
@@ -51,6 +53,13 @@ public class StateMachine : MonoBehaviour {
 
 	public void GameOverToShop() {
 	
+	}
+
+	IEnumerator StartToMenuCoroutine() {
+		state = States.Intermediate;
+
+		yield return animWFS;
+		state = States.Menu;
 	}
 
 
