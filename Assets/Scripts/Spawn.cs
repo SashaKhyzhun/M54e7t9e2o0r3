@@ -26,6 +26,7 @@ public class Spawn : MonoBehaviour {
     private Rigidbody2D currProjectileRb;
     private ProjectileController currProjectileController;
     private PlayerController playerController;
+	private Coroutine currCoroutine;
     private int currProjectileIndex;
     private bool canSpawn = true;
     private float randomX; //рандом падіння метеора по Х.
@@ -42,13 +43,18 @@ public class Spawn : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        if (!spawnEnabled) {
-            if (inputHeandler.started) {
-                spawnEnabled = true;
-            }
-        }
+		if (inputHeandler.started) {
+			if (!spawnEnabled)
+				spawnEnabled = true;
+		} else {
+			if (currCoroutine != null) {
+				StopAllCoroutines ();
+				currCoroutine = null;
+			}
+		}
+		spawnEnabled = inputHeandler.started;
         if (spawnEnabled && canSpawn) { 
-			StartCoroutine(SpawnCoroutine()); 
+			currCoroutine = StartCoroutine(SpawnCoroutine()); 
 		} // running the coroutine
     }
 
@@ -78,7 +84,7 @@ public class Spawn : MonoBehaviour {
             if (currProjectileIndex < poolSize - 1) { currProjectileIndex++; } else { currProjectileIndex = 0; } // if ran out of balls - take the first
             canSpawn = true;
         //} 
-
+		currCoroutine = null;
     }
 
     void CreatePool(string name) {

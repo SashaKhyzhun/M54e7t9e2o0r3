@@ -3,6 +3,7 @@ using UnityEngine.UI;
 
 public class ScoreController : MonoBehaviour {
 
+	public StateMachine stateMachine;
 	public Spawn coinSpawn, meteorSpawn;
     public Text coinText, meteorText;
 
@@ -17,17 +18,20 @@ public class ScoreController : MonoBehaviour {
     }
     
 	public void CoinScoreUp() {
-		SetText(coinText, ++coinScore);
+		if (coinSpawn.spawnEnabled)
+			SetText(coinText, ++coinScore);
 	}
 
 	public void MeteorScoreUp() {
-		SetText(meteorText, ++meteorScore);
+		if (meteorSpawn.spawnEnabled)
+			SetText (meteorText, ++meteorScore);
 	}
 
 	public void Wasted() {
 		coinSpawn.spawnEnabled = false;
 		meteorSpawn.spawnEnabled = false;
 		meteorScore = 0;
+		stateMachine.GameToGameOver ();
 		SetText (meteorText, meteorScore);
 	}
 

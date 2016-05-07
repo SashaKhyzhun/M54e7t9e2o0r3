@@ -33,7 +33,7 @@ public class PlayerController : MonoBehaviour {
     void Update() {
         if (canStart) {
             if (inputHeandler.started) {
-                direction = -1f;
+                direction = 1f;
                 anim.SetBool("started", true);
                 canStart = false;
             }
@@ -61,6 +61,7 @@ public class PlayerController : MonoBehaviour {
 			dead = true;
 			anim.SetBool("dead", true);
 			canFlip = false; //test test test grabli
+			inputHeandler.started = false;
 		} 
 	}
 
