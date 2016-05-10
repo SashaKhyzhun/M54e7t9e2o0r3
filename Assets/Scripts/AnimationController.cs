@@ -4,7 +4,7 @@ using System.Collections;
 public class AnimationController : MonoBehaviour {
 
 	public Animator splashScreenLayout;
-	//public Animator tutorialLayout;
+	public Animator tutorialLayout;
 	public Animator shopLayout;
 	public Animator menuLayout;
 	public Animator gameLayout;
@@ -42,6 +42,11 @@ public class AnimationController : MonoBehaviour {
 	public void GameOverToggle(bool toggle)
 	{
 		gameOverLayout.SetBool(animBoolName, toggle);
+	}
+
+	public void TutorialToggle(bool toggle)
+	{
+		tutorialLayout.SetBool(animBoolName, toggle);
 	}
 }
 

@@ -30,8 +30,11 @@ public class ScoreController : MonoBehaviour {
 	public void Wasted() {
 		coinSpawn.spawnEnabled = false;
 		meteorSpawn.spawnEnabled = false;
-		meteorScore = 0;
 		stateMachine.GameToGameOver ();
+	}
+
+	public void ResetScore() {		
+		meteorScore = 0;
 		SetText (meteorText, meteorScore);
 	}
 

@@ -8,7 +8,6 @@ public class PlayerController : MonoBehaviour {
     public float speed = 5f;
    
     private InputHeandler inputHeandler;
-    private PlayerController playerController;
     private Rigidbody2D rb;
     private Animator anim;
     private Touch currTouch;
@@ -25,7 +24,6 @@ public class PlayerController : MonoBehaviour {
 			scoreController = GetComponent<ScoreController> ();
 		}
         inputHeandler = GetComponent<InputHeandler>();
-        playerController = GetComponent<PlayerController>();
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
 	}
@@ -60,9 +58,20 @@ public class PlayerController : MonoBehaviour {
 		if (!dead) {
 			dead = true;
 			anim.SetBool("dead", true);
-			canFlip = false; //test test test grabli
+			anim.SetBool("started", false);
+			canFlip = false;
 			inputHeandler.started = false;
 		} 
+	}
+
+	public void RaiseFromDead() {
+		if (dead) {
+			dead = false;
+			anim.SetBool("dead", false);
+			canFlip = true;
+			canStart = true;
+			direction = 0f;
+		}
 	}
 
   
