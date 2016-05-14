@@ -1,10 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Spawn : MonoBehaviour {
+public class Spawn : MonoBehaviour
+{
 
     public ScoreController scoreController;
-    public GameObject projectilePrefab; //meteor prefab
+    public GameObject projectilePrefab;
+    //meteor prefab
     public InputHeandler inputHeandler;
     public bool spawnEnabled = true;
     [Header("Pools parameters")]
@@ -14,27 +16,33 @@ public class Spawn : MonoBehaviour {
     [Header("Meteor settings")]
     public float minSpeed = 2f;
     public float maxSpeed = 10f;
-	[Header("Spawn Object Settings")]
-	public float minTimeSpawn = 12f;
-	public float maxTimeSpawn = 30f;
+    [Header("Spawn Object Settings")]
+    public float minTimeSpawn = 12f;
+    public float maxTimeSpawn = 30f;
 
 
-    private GameObject ProjectilePool;	//pool meteora
-    private GameObject currProjectile;	//meteor, coin
+    private GameObject ProjectilePool;
+    //pool meteora
+    private GameObject currProjectile;
+    //meteor, coin
     private Transform[] projectiles;
     private Transform myTransform;
     private Rigidbody2D currProjectileRb;
     private ProjectileController currProjectileController;
     private PlayerController playerController;
-	private Coroutine currCoroutine;
+    private Coroutine currCoroutine;
     private int currProjectileIndex;
     private bool canSpawn = true;
-    private float randomX; //рандом падіння метеора по Х.
-    private float extent; //виход за камеру
-    private float speed; // speed :D
+    private float randomX;
+    //рандом падіння метеора по Х.
+    private float extent;
+    //виход за камеру
+    private float speed;
+    // speed :D
 
     // Use this for initialization
-    void Start() {
+    void Start()
+    {
         CreatePool("ProjectilePool");
         myTransform = transform;
         currProjectileIndex = 0;
@@ -42,52 +50,69 @@ public class Spawn : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void Update() {
-		if (inputHeandler.started) {
-			if (!spawnEnabled)
-				spawnEnabled = true;
-		} else {
-			if (currCoroutine != null) {
-				StopAllCoroutines ();
-				currCoroutine = null;
-			}
-		}
-		spawnEnabled = inputHeandler.started;
-        if (spawnEnabled && canSpawn) { 
-			currCoroutine = StartCoroutine(SpawnCoroutine()); 
-		} // running the coroutine
+    void Update()
+    {
+        //if (inputHeandler.started)
+        //{
+        //    if (!spawnEnabled)
+        //        spawnEnabled = true;
+        //}
+        //else
+        if (!inputHeandler.started)
+        {
+            if (currCoroutine != null)
+            {
+                StopAllCoroutines();
+                currCoroutine = null;
+                canSpawn = true;
+            }
+        }
+        spawnEnabled = inputHeandler.started;
+        if (spawnEnabled && canSpawn)
+        {
+            currCoroutine = StartCoroutine(SpawnCoroutine());
+        } // running the coroutine
     }
 
-    IEnumerator SpawnCoroutine() {
+    IEnumerator SpawnCoroutine()
+    {
         // initialization
         canSpawn = false;
-		yield return new WaitForSeconds(spawnRate);
+        yield return new WaitForSeconds(spawnRate);
         currProjectile = ProjectilePool.transform.GetChild(currProjectileIndex).gameObject;
 
-            //if (!currProjectile.activeInHierarchy) {
-            currProjectileRb = currProjectile.GetComponent<Rigidbody2D>();
-            currProjectile.SetActive(true);
+        //if (!currProjectile.activeInHierarchy) {
+        currProjectileRb = currProjectile.GetComponent<Rigidbody2D>();
+        currProjectile.SetActive(true);
 
-            // transformation
-            randomX = Random.Range(-extent, extent);
-            speed = Random.Range(minSpeed, maxSpeed);
-			spawnRate = Random.Range(minTimeSpawn, maxTimeSpawn);
-            currProjectile.transform.position = new Vector3(randomX, myTransform.position.y, myTransform.position.z);
-            currProjectile.transform.rotation = myTransform.rotation;
-            currProjectileRb.angularVelocity = 0;
-            currProjectileRb.velocity = Vector2.down * speed;
+        // transformation
+        randomX = Random.Range(-extent, extent);
+        speed = Random.Range(minSpeed, maxSpeed);
+        spawnRate = Random.Range(minTimeSpawn, maxTimeSpawn);
+        currProjectile.transform.position = new Vector3(randomX, myTransform.position.y, myTransform.position.z);
+        currProjectile.transform.rotation = myTransform.rotation;
+        currProjectileRb.angularVelocity = 0;
+        currProjectileRb.velocity = Vector2.down * speed;
 
-            // cooldown
-            //}
+        // cooldown
+        //}
 
-            // ready to go
-            if (currProjectileIndex < poolSize - 1) { currProjectileIndex++; } else { currProjectileIndex = 0; } // if ran out of balls - take the first
-            canSpawn = true;
+        // ready to go
+        if (currProjectileIndex < poolSize - 1)
+        {
+            currProjectileIndex++;
+        }
+        else
+        {
+            currProjectileIndex = 0;
+        } // if ran out of balls - take the first
+        canSpawn = true;
         //} 
-		currCoroutine = null;
+        currCoroutine = null;
     }
 
-    void CreatePool(string name) {
+    void CreatePool(string name)
+    {
         ProjectilePool = new GameObject(); // creating ball pool
         ProjectilePool.name = name; // naming it
         ProjectilePool.transform.position = Vector3.up * 10; // setting its position
