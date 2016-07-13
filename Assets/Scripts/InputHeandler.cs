@@ -3,25 +3,25 @@ using System.Collections;
 
 public class InputHeandler : MonoBehaviour
 {
-    public float firstTouchCooldown = 1f;
+    //public float firstTouchCooldown = 1f; deprecated
 
     public bool started { get; set; }
 
     public bool touched { get; private set; }
 
-    private WaitForSeconds firstTouchCooldownWFS;
+    //private WaitForSeconds firstTouchCooldownWFS; deprecated
 
     //private Touch currentTouch;
     private WaitForEndOfFrame wfeof;
 
     void Start()
     {
-        started = false;
+        started = false; // we're not started yet.
         wfeof = new WaitForEndOfFrame();
-        firstTouchCooldownWFS = new WaitForSeconds(firstTouchCooldown);
+        //firstTouchCooldownWFS = new WaitForSeconds(firstTouchCooldown); deprecated
     }
 
-    //    void Update() {
+    //    void Update() { the hard way
     //
     //#if UNITY_EDITOR
     ////        if (Input.GetMouseButtonDown(0)) {
@@ -57,22 +57,22 @@ public class InputHeandler : MonoBehaviour
 
     public void HandleTouch()
     {
-        if (/*canStart && */!started)
-        {
-            started = true;
-            //StartCoroutine(FirstTouchCooldown());
-        }
-        else
+        if (started) // if this is not the first touch
         {
             touched = true;
             StartCoroutine(TouchRestore());
+        }
+        else // or if it is
+        {
+            started = true;
+            //StartCoroutine(FirstTouchCooldown());
         }
     }
 
     IEnumerator TouchRestore()
     {
         yield return wfeof;
-        touched = false;
+        touched = false; // reset touched variable after the frame
     }
 
     //    IEnumerator FirstTouchCooldown()

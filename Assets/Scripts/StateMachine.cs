@@ -242,7 +242,7 @@ public class StateMachine : MonoBehaviour
         yield return animWFS;
         /////
         scoreController.ResetScore();
-        playerController.RaiseFromDead();
+        playerController.Revive();
         /////
         animationContoller.GameToggle(true);
         yield return animWFS;

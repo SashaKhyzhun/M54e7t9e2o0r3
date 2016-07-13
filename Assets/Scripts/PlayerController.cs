@@ -73,7 +73,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void RaiseFromDead()
+    public void Revive()
     {
         if (dead)
         {
@@ -83,5 +83,10 @@ public class PlayerController : MonoBehaviour
             canStart = true;
             direction = 0f;
         }
+    }
+
+    public void UpdateAnimator()
+    {
+        anim = GetComponent<Animator>();
     }
 }
