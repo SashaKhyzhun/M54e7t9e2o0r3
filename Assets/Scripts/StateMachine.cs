@@ -24,6 +24,7 @@ public class StateMachine : MonoBehaviour
 
     private Coroutine currentCoroutine;
     private WaitForSeconds animWFS;
+    private States prevState;
 
     void Start()
     {
@@ -141,6 +142,19 @@ public class StateMachine : MonoBehaviour
         }
     }
 
+    public void BackFromShop()
+    {
+        switch (prevState)
+        {
+            case States.Menu:
+                ShopToMenu();
+                break;
+            case States.GameOver:
+                ShopToGameOver();
+                break;
+        }
+    }
+
     IEnumerator StartToMenuCoroutine()
     {
         state = States.Intermediate;
@@ -172,6 +186,7 @@ public class StateMachine : MonoBehaviour
         animationContoller.ShopToggle(true);
         yield return animWFS;
         state = States.Shop;
+        prevState = States.Menu;
         currentCoroutine = null;
     }
 
@@ -260,6 +275,7 @@ public class StateMachine : MonoBehaviour
         animationContoller.ShopToggle(true);
         yield return animWFS;
         state = States.Shop;
+        prevState = States.GameOver;
         currentCoroutine = null;
     }
 
