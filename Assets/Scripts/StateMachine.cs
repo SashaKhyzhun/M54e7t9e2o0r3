@@ -6,7 +6,7 @@ public enum States
 {
     Start,
     Menu,
-    Shop,
+    Settings,
     Game,
     GameOver,
     Intermediate
@@ -48,11 +48,11 @@ public class StateMachine : MonoBehaviour
         }
     }
 
-    public void MenuToShop()
+    public void MenuToSettings()
     {
         if (currentCoroutine == null)
         {
-            currentCoroutine = StartCoroutine(MenuToShopCoroutine());
+            currentCoroutine = StartCoroutine(MenuToSettingsCoroutine());
         }
     }
 
@@ -65,11 +65,11 @@ public class StateMachine : MonoBehaviour
     }
 
 
-    public void ShopToMenu()
+    public void SettingsToMenu()
     {
         if (currentCoroutine == null)
         {
-            currentCoroutine = StartCoroutine(ShopToMenuCoroutine());
+            currentCoroutine = StartCoroutine(SettingsToMenuCoroutine());
         }
     }
 
@@ -81,11 +81,11 @@ public class StateMachine : MonoBehaviour
         }
     }
 
-    public void ShopToGameOver()
+    public void SettingsToGameOver()
     {
         if (currentCoroutine == null)
         {
-            currentCoroutine = StartCoroutine(ShopToGameOverCoroutine());
+            currentCoroutine = StartCoroutine(SettingsToGameOverCoroutine());
         }
     }
 
@@ -113,11 +113,11 @@ public class StateMachine : MonoBehaviour
         }
     }
 
-    public void GameOverToShop()
+    public void GameOverToSettings()
     {
         if (currentCoroutine == null)
         {
-            currentCoroutine = StartCoroutine(GameOverToShopCoroutine());
+            currentCoroutine = StartCoroutine(GameOverToSettingsCoroutine());
         }
     }
 
@@ -142,15 +142,15 @@ public class StateMachine : MonoBehaviour
         }
     }
 
-    public void BackFromShop()
+    public void BackFromSettings()
     {
         switch (prevState)
         {
             case States.Menu:
-                ShopToMenu();
+                SettingsToMenu();
                 break;
             case States.GameOver:
-                ShopToGameOver();
+                SettingsToGameOver();
                 break;
         }
     }
@@ -178,14 +178,14 @@ public class StateMachine : MonoBehaviour
         currentCoroutine = null;
     }
 
-    IEnumerator MenuToShopCoroutine()
+    IEnumerator MenuToSettingsCoroutine()
     {
         state = States.Intermediate;
         animationContoller.MenuToggle(false);
         yield return animWFS;
-        animationContoller.ShopToggle(true);
+        animationContoller.SettingsToggle(true);
         yield return animWFS;
-        state = States.Shop;
+        state = States.Settings;
         prevState = States.Menu;
         currentCoroutine = null;
     }
@@ -199,11 +199,11 @@ public class StateMachine : MonoBehaviour
         currentCoroutine = null;
     }
 
-    IEnumerator ShopToMenuCoroutine()
+    IEnumerator SettingsToMenuCoroutine()
     {
         state = States.Intermediate;
-        animationContoller.ShopToggle(false);
-        yield return animWFS;
+        animationContoller.SettingsToggle(false);
+        //yield return animWFS; //removed for more fluid transition
         animationContoller.MenuToggle(true);
         yield return animWFS;
         state = States.Menu;
@@ -219,11 +219,11 @@ public class StateMachine : MonoBehaviour
         currentCoroutine = null;
     }
 
-    IEnumerator ShopToGameOverCoroutine()
+    IEnumerator SettingsToGameOverCoroutine()
     {
         state = States.Intermediate;
-        animationContoller.ShopToggle(false);
-        yield return animWFS;
+        animationContoller.SettingsToggle(false);
+        //yield return animWFS; //removed for more fluid transition
         animationContoller.GameOverToggle(true);
         animationContoller.GameToggle(true);
         yield return animWFS;
@@ -266,15 +266,15 @@ public class StateMachine : MonoBehaviour
         currentCoroutine = null;
     }
 
-    IEnumerator GameOverToShopCoroutine()
+    IEnumerator GameOverToSettingsCoroutine()
     {
         state = States.Intermediate;
         animationContoller.GameOverToggle(false);
         animationContoller.GameToggle(false);
         yield return animWFS;
-        animationContoller.ShopToggle(true);
+        animationContoller.SettingsToggle(true);
         yield return animWFS;
-        state = States.Shop;
+        state = States.Settings;
         prevState = States.GameOver;
         currentCoroutine = null;
     }
