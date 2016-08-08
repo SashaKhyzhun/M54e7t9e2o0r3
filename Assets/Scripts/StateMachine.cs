@@ -20,6 +20,7 @@ public class StateMachine : MonoBehaviour
     public AnimationController animationContoller;
     public ScoreController scoreController;
     public PlayerController playerController;
+    public SkinChanger skinChanger;
     public Button catcher;
 
     private Coroutine currentCoroutine;
@@ -181,6 +182,7 @@ public class StateMachine : MonoBehaviour
     IEnumerator MenuToSettingsCoroutine()
     {
         state = States.Intermediate;
+        skinChanger.RefreshSettings();
         animationContoller.MenuToggle(false);
         yield return animWFS;
         animationContoller.SettingsToggle(true);
@@ -269,6 +271,7 @@ public class StateMachine : MonoBehaviour
     IEnumerator GameOverToSettingsCoroutine()
     {
         state = States.Intermediate;
+        skinChanger.RefreshSettings();
         animationContoller.GameOverToggle(false);
         animationContoller.GameToggle(false);
         yield return animWFS;

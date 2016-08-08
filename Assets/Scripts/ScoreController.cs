@@ -4,6 +4,7 @@ using UnityEngine.UI;
 public class ScoreController : MonoBehaviour
 {
 
+    [ContextMenuItem("GetCoins", "GetCoins")]
     public StateMachine stateMachine;
     public Spawn coinSpawn, meteorSpawn;
     public Text coinText, meteorText;
@@ -14,7 +15,7 @@ public class ScoreController : MonoBehaviour
 
     void Start()
     {
-        coinScore = 0;
+        coinScore = 0; //load changes instead
         meteorScore = 0;
         SetText(coinText, coinScore);
         SetText(meteorText, meteorScore);
@@ -23,7 +24,27 @@ public class ScoreController : MonoBehaviour
     public void CoinScoreUp()
     {
         if (coinSpawn.spawnEnabled)
+        {
             SetText(coinText, ++coinScore);
+            //save changes
+        }
+    }
+
+    public void SpendCoins(int amount)
+    {
+        coinScore -= amount;
+        SetText(coinText, coinScore);
+    }
+
+    public int GetCoinScore()
+    {
+        return coinScore;
+    }
+
+    public void GetCoins()
+    {
+        coinScore += 2;
+        SetText(coinText, coinScore);
     }
 
     public void MeteorScoreUp()
@@ -40,6 +61,7 @@ public class ScoreController : MonoBehaviour
         coinSpawn.spawnEnabled = false;
         meteorSpawn.spawnEnabled = false;
         stateMachine.GameToGameOver();
+        //if meteor score > best - record it in the history
     }
 
     public void ResetScore()
