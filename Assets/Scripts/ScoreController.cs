@@ -7,7 +7,8 @@ public class ScoreController : MonoBehaviour
     [ContextMenuItem("GetCoins", "GetCoins")]
     public StateMachine stateMachine;
     public Spawn coinSpawn, meteorSpawn;
-    public Text coinText, meteorText;
+    public Text[] coinTexts;
+    public Text meteorText;
     public ShareInfo gameOverShareInfo;
 
     private int coinScore;
@@ -17,7 +18,10 @@ public class ScoreController : MonoBehaviour
     {
         coinScore = 0; //load changes instead
         meteorScore = 0;
-        SetText(coinText, coinScore);
+        for (int i = 0; i < coinTexts.Length; i++)
+        {
+            SetText(coinTexts[i], coinScore);            
+        }
         SetText(meteorText, meteorScore);
     }
 
@@ -25,7 +29,11 @@ public class ScoreController : MonoBehaviour
     {
         if (coinSpawn.spawnEnabled)
         {
-            SetText(coinText, ++coinScore);
+            ++coinScore;
+            for (int i = 0; i < coinTexts.Length; i++)
+            {
+                SetText(coinTexts[i], coinScore);            
+            }
             //save changes
         }
     }
@@ -33,7 +41,10 @@ public class ScoreController : MonoBehaviour
     public void SpendCoins(int amount)
     {
         coinScore -= amount;
-        SetText(coinText, coinScore);
+        for (int i = 0; i < coinTexts.Length; i++)
+        {
+            SetText(coinTexts[i], coinScore);            
+        }
     }
 
     public int GetCoinScore()
@@ -44,7 +55,10 @@ public class ScoreController : MonoBehaviour
     public void GetCoins()
     {
         coinScore += 2;
-        SetText(coinText, coinScore);
+        for (int i = 0; i < coinTexts.Length; i++)
+        {
+            SetText(coinTexts[i], coinScore);            
+        }
     }
 
     public void MeteorScoreUp()

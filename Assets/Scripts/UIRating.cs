@@ -7,4 +7,9 @@ public class UIRating : MonoBehaviour
     {
         Application.OpenURL("market://details?id=" + Application.bundleIdentifier);
     }
+
+    public void GoToURL(string url)
+    {
+        Application.OpenURL(url);
+    }
 }
