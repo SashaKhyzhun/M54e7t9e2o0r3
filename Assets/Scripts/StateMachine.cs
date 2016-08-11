@@ -27,6 +27,11 @@ public class StateMachine : MonoBehaviour
     private WaitForSeconds animWFS;
     private States prevState;
 
+    void Awake()
+    {
+        Input.multiTouchEnabled = false;
+    }
+
     void Start()
     {
         animWFS = new WaitForSeconds(animationContoller.animationTime);

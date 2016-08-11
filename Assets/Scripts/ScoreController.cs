@@ -75,6 +75,7 @@ public class ScoreController : MonoBehaviour
         coinSpawn.spawnEnabled = false;
         meteorSpawn.spawnEnabled = false;
         stateMachine.GameToGameOver();
+        gameOverShareInfo.text = gameOverShareInfo.defaultText;
         //if meteor score > best - record it in the history
     }
 
