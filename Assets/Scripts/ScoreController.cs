@@ -54,7 +54,7 @@ public class ScoreController : MonoBehaviour
 
     public void GetCoins()
     {
-        coinScore += 2;
+        coinScore += 10;
         for (int i = 0; i < coinTexts.Length; i++)
         {
             SetText(coinTexts[i], coinScore);            
