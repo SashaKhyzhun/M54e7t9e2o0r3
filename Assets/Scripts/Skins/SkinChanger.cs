@@ -3,63 +3,25 @@
 public class SkinChanger : MonoBehaviour
 {
     public PlayerController playerController;
+    public SaveSystemBidge saveSystemBridge;
     public ScoreController scoreController;
     public SpriteRenderer background;
-
-    //    public RuntimeAnimatorController[] characterAnimators;
-    //    public float[] characterSpeeds;
-    //    public int[] characterSkinsCost;
-    //    private bool[] characterSkinAvailable;
+    
     public CharacterSkin[] characters;
     private int currentCharacterSkin = 0;
-
-    //    public Sprite[] backgrounds;
-    //    public int[] backgroundsCost;
-    //    private bool[] backgroundsAvailable;
+    
     public BackgroundSkin[] backgrounds;
     private int currentBackground = 0;
 
     void Start()
     {
-        //characterSkinAvailable = new bool[characterSkinsCost.Length];
-        //backgroundsAvailable = new bool[backgroundsCost.Length];
-
+        saveSystemBridge.LoadCharacters(ref characters, out currentCharacterSkin);
+        saveSystemBridge.LoadBackgrounds(ref backgrounds, out currentBackground);
         //load changes
-        //get current index and ChangePlayer and ChangeBackground by that index
+        //get current indices and ChangePlayer and ChangeBackground by that index
         ChangePlayer(currentCharacterSkin);
         ChangeBackground(currentBackground);
     }
-
-    //    public void RefreshSettings()
-    //    {
-    //        for (int i = 0; i < characterSkinsCost.Length; i++)
-    //        {
-    //            characterSkinAvailable[i] = scoreController.GetCoinScore() >= characterSkinsCost[i];
-    //        }
-    //        //should be called when game state changes to settings
-    //        //change appearence of buttons
-    //    }
-
-    //    public void ChangePlayer(int index)
-    //    {
-    //        if (characterSkinAvailable[index])
-    //        {
-    //            playerController.gameObject.GetComponent<Animator>().runtimeAnimatorController = characterAnimators[index];
-    //            playerController.speed = characterSpeeds[index];
-    //            currentCharacterSkin = index;
-    //            //save changes
-    //        }
-    //    }
-
-    //    public void ChangeBackground(int index)
-    //    {
-    //        if (backgroundsAvailable[index])
-    //        {
-    //            background.sprite = backgrounds[index];
-    //            currentBackground = index;
-    //            // save changes
-    //        }
-    //    }
 
     public void RefreshSettings()
     {
@@ -77,7 +39,7 @@ public class SkinChanger : MonoBehaviour
             backgrounds[currentBackground].selected = true;
             backgrounds[i].UpdateGfx();
         } 
-        //should be called when game state changes to settings
+        //should be called when gamestate changes to settings
         //change appearence of buttons
     }
 
@@ -121,6 +83,7 @@ public class SkinChanger : MonoBehaviour
         characters[index].owned = true;
         RefreshSettings();
         //save changes
+        saveSystemBridge.SaveCharacters(characters, currentCharacterSkin);
     }
 
     public void ChangeBackground(int index)
@@ -130,5 +93,6 @@ public class SkinChanger : MonoBehaviour
         backgrounds[index].owned = true;
         RefreshSettings();
         // save changes
+        saveSystemBridge.SaveBackrounds(backgrounds, currentBackground);
     }
 }
