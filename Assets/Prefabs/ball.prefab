@@ -12,6 +12,7 @@ GameObject:
   - 50: {fileID: 5058616}
   - 58: {fileID: 5895208}
   - 114: {fileID: 11405210}
+  - 95: {fileID: 95000011008375762}
   m_Layer: 10
   m_Name: ball
   m_TagString: Dangerous
@@ -26,7 +27,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 168158}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -0.22246456, y: 0.122517824, z: 0}
   m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
@@ -48,7 +49,7 @@ Rigidbody2D:
   m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!58 &5895208
 CircleCollider2D:
   m_ObjectHideFlags: 1
@@ -60,9 +61,9 @@ CircleCollider2D:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_UsedByEffector: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: -1}
   serializedVersion: 2
-  m_Radius: 0.785
+  m_Radius: 0.42
 --- !u!114 &11405210
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -76,6 +77,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scoreController: {fileID: 0}
   lifeSpan: 5
+  animationTime: 0.4
 --- !u!212 &21208584
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -105,7 +107,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1683217331
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 752d8592be130fd488a5b25125bb91c3, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 3c2f930babe992640b42a783c2858534, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -152,3 +154,20 @@ Prefab:
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 168158}
   m_IsPrefabParent: 1
+--- !u!95 &95000011008375762
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 168158}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: c26da9b6895338e4388bfa6a2095ec5c, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
