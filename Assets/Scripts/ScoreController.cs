@@ -86,7 +86,10 @@ public class ScoreController : MonoBehaviour
         coinSpawn.spawnEnabled = false;
         meteorSpawn.spawnEnabled = false;
         stateMachine.GameToGameOver();
-        gameOverShareInfo.text = gameOverShareInfo.defaultText;
+        if (meteorScore < 1)
+        {
+            gameOverShareInfo.text = gameOverShareInfo.defaultText;
+        }
         //if meteor score > best - save best and update ui
         if (meteorScore > best)
         {
