@@ -15,10 +15,18 @@ public class SkinChanger : MonoBehaviour
 
     void Start()
     {
-        saveSystemBridge.LoadCharacters(ref characters, out currentCharacterSkin);
-        saveSystemBridge.LoadBackgrounds(ref backgrounds, out currentBackground);
+        //if (GPGController.NoGPGMode)
+        //{
+            LoadStats();
+        //}
         //load changes
         //get current indices and ChangePlayer and ChangeBackground by that index
+    }
+
+    public void LoadStats()
+    {
+        saveSystemBridge.LoadCharacters(ref characters, out currentCharacterSkin);
+        saveSystemBridge.LoadBackgrounds(ref backgrounds, out currentBackground);
         ChangePlayer(currentCharacterSkin);
         ChangeBackground(currentBackground);
     }

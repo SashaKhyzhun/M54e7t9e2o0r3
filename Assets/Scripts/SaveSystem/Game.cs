@@ -4,10 +4,13 @@
 public class Game
 {
     public static Game current;
-    public string name;
-
+    public static Game local;
+    public static Game cloud;
     public static int characterCount;
     public static int backgroundCount;
+
+    public string name;
+    public DateTime timeStamp;
 
     public SerializableSkin[] characters;
     public SerializableSkin[] backgrounds;
@@ -41,6 +44,7 @@ public class Game
         coins = 0;                                          // set default values
         best = 0;
 
-        name = "save_" + DateTime.Now;                      // and name
+        timeStamp = DateTime.Now;
+        name = "save";                      // and name
     }
 }

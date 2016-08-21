@@ -19,6 +19,7 @@ public class SaveSystemBidge : MonoBehaviour
         if (!SaveLoad.Load())           // if can't load - create new game and save it to file
         {
             Game.current = new Game();
+            //SaveLoad.Load();
             SaveLoad.Save();
         }
     }

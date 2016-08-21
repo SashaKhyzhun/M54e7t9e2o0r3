@@ -7,6 +7,7 @@ public class ScoreController : MonoBehaviour
     [ContextMenuItem("GetCoins", "GetCoins")]
     public StateMachine stateMachine;
     public SaveSystemBidge saveSystemBridge;
+    public GPGController gpgController;
     public Spawn coinSpawn, meteorSpawn;
     public Text[] coinTexts;
     public Text meteorText;
@@ -20,15 +21,23 @@ public class ScoreController : MonoBehaviour
     void Start()
     {
         //coinScore = 0; //load changes instead
-        best = saveSystemBridge.LoadBest();
-        coinScore = saveSystemBridge.LoadCoins();
+        //if (GPGController.NoGPGMode)
+        //{
+        LoadStats();
+        //}
         meteorScore = 0;
+        SetText(meteorText, meteorScore);
+    }
+
+    public void LoadStats()
+    {
+        best = saveSystemBridge.LoadBest();
+        SetText(bestText, best);
+        coinScore = saveSystemBridge.LoadCoins();
         for (int i = 0; i < coinTexts.Length; i++)
         {
-            SetText(coinTexts[i], coinScore);            
+            SetText(coinTexts[i], coinScore);
         }
-        SetText(meteorText, meteorScore);
-        SetText(bestText, best);
     }
 
     public void CoinScoreUp()
@@ -38,7 +47,7 @@ public class ScoreController : MonoBehaviour
             ++coinScore;
             for (int i = 0; i < coinTexts.Length; i++)
             {
-                SetText(coinTexts[i], coinScore);            
+                SetText(coinTexts[i], coinScore);
             }
             //save changes
             saveSystemBridge.SaveCoins(coinScore);
@@ -50,7 +59,7 @@ public class ScoreController : MonoBehaviour
         coinScore -= amount;
         for (int i = 0; i < coinTexts.Length; i++)
         {
-            SetText(coinTexts[i], coinScore);            
+            SetText(coinTexts[i], coinScore);
         }
         //save changes
         saveSystemBridge.SaveCoins(coinScore);
@@ -77,7 +86,25 @@ public class ScoreController : MonoBehaviour
         if (meteorSpawn.spawnEnabled)
         {
             SetText(meteorText, ++meteorScore);
-            gameOverShareInfo.text = string.Format(gameOverShareInfo.format, meteorScore);	
+            gameOverShareInfo.text = string.Format(gameOverShareInfo.format, meteorScore);
+        }
+    }
+
+    public void SetBestScore()
+    {
+        //if meteor score > best - save best and update ui
+        if (best < gpgController.best)
+        {
+            best = gpgController.best;
+            saveSystemBridge.SaveBest(best);
+            SetText(bestText, best);
+        }
+
+        if (meteorScore > best)
+        {
+            best = meteorScore;
+            saveSystemBridge.SaveBest(best);
+            SetText(bestText, best);
         }
     }
 
@@ -90,24 +117,20 @@ public class ScoreController : MonoBehaviour
         {
             gameOverShareInfo.text = gameOverShareInfo.defaultText;
         }
-        //if meteor score > best - save best and update ui
-        if (meteorScore > best)
-        {
-            best = meteorScore;
-            SetText(bestText, best);
-            saveSystemBridge.SaveBest(best);
-        }
+        SetBestScore();
+        gpgController.SubmitScore(meteorScore);
     }
 
     public void ResetScore()
-    {		
+    {
         meteorScore = 0;
         SetText(meteorText, meteorScore);
     }
+
 
     void SetText(Text text, int score)
     {
         text.text = score + "";
     }
- 
+
 }

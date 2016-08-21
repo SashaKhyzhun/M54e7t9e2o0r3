@@ -457,9 +457,10 @@ GameObject:
   - 114: {fileID: 1271028210}
   - 114: {fileID: 1271028211}
   - 114: {fileID: 1271028204}
+  - 114: {fileID: 1271028212}
   m_Layer: 5
   m_Name: _GameManager
-  m_TagString: Untagged
+  m_TagString: GameController
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -542,6 +543,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stateMachine: {fileID: 1271028205}
   saveSystemBridge: {fileID: 1271028204}
+  gpgController: {fileID: 1271028212}
   coinSpawn: {fileID: 1121564024}
   meteorSpawn: {fileID: 1915412741}
   coinTexts:
@@ -601,6 +603,18 @@ MonoBehaviour:
   - {fileID: 7334921}
   - {fileID: 1970559953}
   - {fileID: 1521799384}
+--- !u!114 &1271028212
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1271028203}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd1afd3c19bab99448e967f1ee8f9701, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pauseOnLogin: 0
 --- !u!95 &1312292326 stripped
 Animator:
   m_PrefabParentObject: {fileID: 95000013922473156, guid: 093baf772bcc6dd49aa56a9ca2ead4df,
@@ -740,6 +754,16 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 114000012381503792, guid: 093baf772bcc6dd49aa56a9ca2ead4df,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000013334408158, guid: 093baf772bcc6dd49aa56a9ca2ead4df,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 224000011255293138, guid: 093baf772bcc6dd49aa56a9ca2ead4df,
         type: 2}
       propertyPath: m_LocalPosition.x
@@ -965,6 +989,56 @@ Prefab:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1271028205}
+    - target: {fileID: 114000012381503792, guid: 093baf772bcc6dd49aa56a9ca2ead4df,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000012381503792, guid: 093baf772bcc6dd49aa56a9ca2ead4df,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000012381503792, guid: 093baf772bcc6dd49aa56a9ca2ead4df,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1271028212}
+    - target: {fileID: 114000012381503792, guid: 093baf772bcc6dd49aa56a9ca2ead4df,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ShowLeaderboardUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000012381503792, guid: 093baf772bcc6dd49aa56a9ca2ead4df,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000013334408158, guid: 093baf772bcc6dd49aa56a9ca2ead4df,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000013334408158, guid: 093baf772bcc6dd49aa56a9ca2ead4df,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000013334408158, guid: 093baf772bcc6dd49aa56a9ca2ead4df,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1271028212}
+    - target: {fileID: 114000013334408158, guid: 093baf772bcc6dd49aa56a9ca2ead4df,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ShowLeaderboardUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000013334408158, guid: 093baf772bcc6dd49aa56a9ca2ead4df,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 093baf772bcc6dd49aa56a9ca2ead4df, type: 2}
   m_IsPrefabParent: 0
