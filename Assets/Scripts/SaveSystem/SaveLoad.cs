@@ -54,6 +54,7 @@ public static class SaveLoad
 
     public static void LoadCloud(byte[] data, bool success)
     {
+        loadFinished = true;
         if (success)
         {
             BinaryFormatter bf = new BinaryFormatter();
@@ -68,7 +69,6 @@ public static class SaveLoad
         {
             Debug.Log("Loading failed");
         }
-        loadFinished = true;
         //ChooseSavedGame();
         //GameObject.FindGameObjectWithTag("GameController").SendMessage("LoadStats");
     }
@@ -78,6 +78,7 @@ public static class SaveLoad
         if (Game.local == null)
         {
             Game.current = new Game();
+            Game.current.timeStamp = Game.current.timeStamp.Subtract(new TimeSpan(36500, 0, 0, 0, 0)); 
             Game.local = Game.current;
         }
         if (Game.local != null && Game.cloud != null)
@@ -97,7 +98,7 @@ public static class SaveLoad
         else
         {
             Game.current = Game.local;
-            Debug.Log("i chose local");
+            Debug.Log("i chose local, because cloud is null");
         }
         Save();
     }
