@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System;
+using System.Collections.Generic;
 using GooglePlayGames;
 using GooglePlayGames.BasicApi;
 using GooglePlayGames.BasicApi.SavedGame;
@@ -9,7 +10,8 @@ public enum OpenMode
 {
     Save,
     Load,
-    None}
+    None
+}
 ;
 
 public class GPGController : MonoBehaviour
@@ -21,12 +23,13 @@ public class GPGController : MonoBehaviour
 
     public bool hasBest { get; set; }
 
-    private static OpenMode currMode = OpenMode.None;
+    private static Queue<OpenMode> currMode;
     private ILeaderboard lb;
 
     // Use this for initialization
     void Awake()
     {
+        currMode = new Queue<OpenMode>();
         Initialize();
         best = -1;
         if (pauseOnLogin)
@@ -41,27 +44,13 @@ public class GPGController : MonoBehaviour
         SignIn();
     }
 
-    // DELETE ME
-    void Update()
-    {
-        if (!NoGPGMode)
-        {
-            if (best < 0)
-            {
-                if (!lb.loading)
-                    GetBestScore(lb);
-            }
-        }
-    }
-
-
     public void Initialize()
     {
-        //PlayGamesClientConfiguration config = new PlayGamesClientConfiguration.Builder()
-        //    .EnableSavedGames() // enables saving game progress.
-        //    .Build();
+        PlayGamesClientConfiguration config = new PlayGamesClientConfiguration.Builder()
+            .EnableSavedGames() // enables saving game progress.
+            .Build();
 
-        //PlayGamesPlatform.InitializeInstance(config);
+        PlayGamesPlatform.InitializeInstance(config);
         // recommended for debugging:
         PlayGamesPlatform.DebugLogEnabled = false;
         // Activate the Google Play Games platform
@@ -73,7 +62,6 @@ public class GPGController : MonoBehaviour
         // authenticate user:
         if (pauseOnLogin)
             Time.timeScale = 0.001f;
-        //Time.timeScale = 0f;
         Social.localUser.Authenticate((bool success) =>
             {
                 // handle success or failure
@@ -84,7 +72,6 @@ public class GPGController : MonoBehaviour
                         Time.timeScale = 1;
                     GetBestScore(lb);
                     Debug.Log("You've successfuly logged in");
-                    //Time.timeScale = 1f;
                 }
                 else
                 {
@@ -92,8 +79,9 @@ public class GPGController : MonoBehaviour
                     if (pauseOnLogin)
                         Time.timeScale = 1;
                     Debug.Log("Log in failed!");
-                    //Time.timeScale = 1f;
                 }
+                Debug.Log("SaveLoad.Load() from Sign In callback function");
+                SaveLoad.Load();
             });
     }
 
@@ -103,9 +91,7 @@ public class GPGController : MonoBehaviour
         if (!NoGPGMode)
         {
             Social.ReportScore(score, Constants.leaderboard_meteor_dodge_top_players, (bool success) =>
-                {
-                    // handle success or failure
-                });
+                { });
         }
     }
 
@@ -114,9 +100,9 @@ public class GPGController : MonoBehaviour
 
     public static void OpenSavedGame(string filename, OpenMode mode)
     {
-        if (!NoGPGMode) // ;STATIC // Fixed, kinda..
+        if (!NoGPGMode) // STATIC // Fixed, kinda..
         {
-            currMode = mode;
+            currMode.Enqueue(mode);
             ISavedGameClient savedGameClient = PlayGamesPlatform.Instance.SavedGame;
             savedGameClient.OpenWithAutomaticConflictResolution(filename, DataSource.ReadCacheOrNetwork,
                 ConflictResolutionStrategy.UseLongestPlaytime, OnSavedGameOpened);
@@ -126,26 +112,39 @@ public class GPGController : MonoBehaviour
 
     static void OnSavedGameOpened(SavedGameRequestStatus status, ISavedGameMetadata game)
     {
+        Debug.Log("OnSavedGameOpened open mode " + currMode.Peek());
         if (status == SavedGameRequestStatus.Success)
         {
-            if (currMode == OpenMode.Save)
+            if (currMode.Peek() == OpenMode.Save)
             {
+                Debug.Log("Starting to save");
                 byte[] bytes = System.IO.File.ReadAllBytes(Application.persistentDataPath + "/" + SaveLoad.fileName + "." + SaveLoad.fileExtention);
                 SaveGame(game, bytes);
             }
-            else if (currMode == OpenMode.Load)
+            else if (currMode.Peek() == OpenMode.Load)
             {
+                Debug.Log("starting to load");
                 LoadGameData(game);
             }
-            currMode = OpenMode.None;
             //Time.timeScale = 1f;
         }
         else
         {
-            currMode = OpenMode.None;
-            Debug.Log("Cannot open save");
+            if (currMode.Peek() == OpenMode.Load)
+            {
+                Debug.Log("Cannot open save to load");
+            }
+            else if (currMode.Peek() == OpenMode.Load)
+            {
+                Debug.Log("Cannot open save to save");
+            }
+            else
+            {
+                Debug.Log("No OpenMode Provided");
+            }
             //Time.timeScale = 1f;
         }
+        currMode.Dequeue();
     }
 
     static void SaveGame(ISavedGameMetadata game, byte[] savedData)
@@ -198,13 +197,13 @@ public class GPGController : MonoBehaviour
                 best = (int)lb.localUserScore.value;
                 if (pauseOnLogin)
                     Time.timeScale = 1;
-                Debug.Log("Loading was successful, the best is " + best);
+                Debug.Log("best is " + best);
             }
             else
             {
                 if (pauseOnLogin)
                     Time.timeScale = 1;
-                Debug.Log("Loading failed");
+                Debug.Log("best load failed");
             }
         });
     }
@@ -217,6 +216,34 @@ public class GPGController : MonoBehaviour
         {
             PlayGamesPlatform.Instance.ShowLeaderboardUI(Constants.leaderboard_meteor_dodge_top_players);
             Debug.Log("Opening the leaderboard...");
+        }
+    }
+
+    //-----------------------------------------------------------------------------------------------------
+
+    public void ShowSelectUI()
+    {
+        uint maxNumToDisplay = 5;
+        bool allowCreateNew = false;
+        bool allowDelete = true;
+
+        ISavedGameClient savedGameClient = PlayGamesPlatform.Instance.SavedGame;
+        savedGameClient.ShowSelectSavedGameUI("Select saved game",
+            maxNumToDisplay,
+            allowCreateNew,
+            allowDelete,
+            OnSavedGameSelected);
+    }
+
+    public void OnSavedGameSelected(SelectUIStatus status, ISavedGameMetadata game)
+    {
+        if (status == SelectUIStatus.SavedGameSelected)
+        {
+            // handle selected game save
+        }
+        else
+        {
+            // handle cancel or error
         }
     }
 

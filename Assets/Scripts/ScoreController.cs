@@ -23,7 +23,7 @@ public class ScoreController : MonoBehaviour
         //coinScore = 0; //load changes instead
         //if (GPGController.NoGPGMode)
         //{
-        LoadStats();
+        //LoadStats();
         //}
         meteorScore = 0;
         SetText(meteorText, meteorScore);

@@ -16,12 +16,12 @@ public class SaveSystemBidge : MonoBehaviour
         Game.characterCount = characterSkinCount;          // in case new game needed
         Game.backgroundCount = backgroundSkinCount;
 
-        if (!SaveLoad.Load())           // if can't load - create new game and save it to file
-        {
-            Game.current = new Game();
-            //SaveLoad.Load();
-            SaveLoad.Save();
-        }
+        //if (!SaveLoad.LoadLocal())           // if can't load - create new game and save it to file
+        //{
+        //    Game.current = new Game();
+        //    //SaveLoad.Load();
+        //    SaveLoad.Save();
+        //}
     }
 
     #region Save_Functions
@@ -73,7 +73,7 @@ public class SaveSystemBidge : MonoBehaviour
     #region Load_Functions
     public void LoadCharacters(ref CharacterSkin[] characters, out int currCharacter)       // if the load was successful - get the characters reference and update it
     {
-        if (SaveLoad.Load())
+        if (SaveLoad.LoadLocal())
         {
             currCharacter = Game.current.currentCharacter;                                      // and also change current character
             for (int i = 0; i < characters.Length; i++)
@@ -90,7 +90,7 @@ public class SaveSystemBidge : MonoBehaviour
 
     public void LoadBackgrounds(ref BackgroundSkin[] backgrounds, out int currBackground)   // same thing
     {
-        if (SaveLoad.Load())
+        if (SaveLoad.LoadLocal())
         {
             currBackground = Game.current.currentBackground;
             for (int i = 0; i < backgrounds.Length; i++)
@@ -108,7 +108,7 @@ public class SaveSystemBidge : MonoBehaviour
     public int LoadBest()                                                                   // just return the value if the load was successful
     {
         int best = 0;
-        if (SaveLoad.Load())
+        if (SaveLoad.LoadLocal())
         {
             best = Game.current.best;
         }
@@ -118,7 +118,7 @@ public class SaveSystemBidge : MonoBehaviour
     public int LoadCoins()
     {
         int coins = 0;
-        if (SaveLoad.Load())
+        if (SaveLoad.LoadLocal())
         {
             coins = Game.current.coins;
         }

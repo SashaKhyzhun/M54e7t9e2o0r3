@@ -19,6 +19,7 @@ public class StateMachine : MonoBehaviour
     public States state;
     public AnimationController animationContoller;
     public ScoreController scoreController;
+    public GPGController gpgController;
     public PlayerController playerController;
     public SkinChanger skinChanger;
     public Button catcher;
@@ -165,8 +166,16 @@ public class StateMachine : MonoBehaviour
     {
         state = States.Intermediate;
         animationContoller.SplashScreenPlay();
-        yield return new WaitForSeconds(animationContoller.splashScreenDuration);
+
+        yield return new WaitForSeconds(animationContoller.splashScreenDuration - animationContoller.splashScreenTransitionTime);
+        SaveLoad.ChooseSavedGame();
+        gpgController.SubmitScore(Game.current.best);
+        scoreController.LoadStats();
+        skinChanger.LoadStats();
+
+        yield return new WaitForSeconds(animationContoller.splashScreenTransitionTime);
         animationContoller.MenuToggle(true);
+
         yield return animWFS;
         state = States.Menu;
         currentCoroutine = null;

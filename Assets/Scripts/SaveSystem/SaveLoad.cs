@@ -18,15 +18,17 @@ public static class SaveLoad
         FileStream file = File.Create(Application.persistentDataPath + "/" + fileName + "." + fileExtention);
         bf.Serialize(file, savedGame);
         file.Close();
-        //GPGController.OpenSavedGame(Game.current.name, OpenMode.Save);
+        Debug.Log("OpenSavedGame from SaveLoad.Save()");
+        GPGController.OpenSavedGame(Game.defaultName, OpenMode.Save);
     }
 
     public static bool Load()
     {
         bool localLoadSuccess = LoadLocal();
         //if (Game.current != null)
-        //   GPGController.OpenSavedGame(Game.current.name, OpenMode.Load);
-        Game.current = Game.local;
+        Debug.Log("OpenSavedGame from SaveLoad.Load()");
+        GPGController.OpenSavedGame(Game.defaultName, OpenMode.Load);
+        //Game.current = Game.local;
         return localLoadSuccess;
     }
 
@@ -38,11 +40,12 @@ public static class SaveLoad
             FileStream file = File.Open(Application.persistentDataPath + "/" + fileName + "." + fileExtention, FileMode.Open);
             savedGame = (Game)bf.Deserialize(file);
             Game.local = savedGame;
+            //if (GPGController.NoGPGMode)
+            //{
+            Game.current = savedGame;
+
+            //}
             file.Close();
-            if (GPGController.NoGPGMode)
-            {
-                Game.current = savedGame;
-            }
             return true;
         }
         else { return false; }
@@ -64,20 +67,36 @@ public static class SaveLoad
         {
             Debug.Log("Loading failed");
         }
-        ChooseSavedGame();
-        GameObject.FindGameObjectWithTag("GameController").SendMessage("LoadStats");
+        //ChooseSavedGame();
+        //GameObject.FindGameObjectWithTag("GameController").SendMessage("LoadStats");
     }
 
-    static void ChooseSavedGame()
+    public static void ChooseSavedGame()
     {
-        int i = DateTime.Compare(Game.local.timeStamp, Game.cloud.timeStamp);
-        if (i > 0)
+        if (Game.local == null)
         {
-            Game.current = Game.local;
+            Game.current = new Game();
+            Game.local = Game.current;
+        }
+        if (Game.local != null && Game.cloud != null)
+        {
+            int i = DateTime.Compare(Game.local.timeStamp, Game.cloud.timeStamp);
+            if (i > 0)
+            {
+                Game.current = Game.local;
+                Debug.Log("i chose local");
+            }
+            else
+            {
+                Game.current = Game.cloud;
+                Debug.Log("i chose cloud");
+            }
         }
         else
         {
-            Game.current = Game.cloud;
+            Game.current = Game.local;
+            Debug.Log("i chose local");
         }
+        Save();
     }
 }

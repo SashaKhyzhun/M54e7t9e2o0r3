@@ -13,15 +13,17 @@ public class SkinChanger : MonoBehaviour
     public BackgroundSkin[] backgrounds;
     private int currentBackground = 0;
 
+    private bool statsLoaded;
+
     void Start()
     {
         //if (GPGController.NoGPGMode)
         //{
-            LoadStats();
+            //LoadStats();
         //}
         //load changes
         //get current indices and ChangePlayer and ChangeBackground by that index
-    }
+    }    
 
     public void LoadStats()
     {

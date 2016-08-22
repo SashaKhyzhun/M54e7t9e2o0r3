@@ -12,6 +12,7 @@ public class AnimationController : MonoBehaviour
 
     public float animationTime = 0.5f;
     public float splashScreenDuration = 4.5f;
+    public float splashScreenTransitionTime = 0.5f;
     public string animBoolName = "enable";
 
     public void SplashScreenPlay()
