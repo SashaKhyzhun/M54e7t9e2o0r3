@@ -650,8 +650,8 @@ MonoBehaviour:
   gameLayout: {fileID: 1242548060}
   gameOverLayout: {fileID: 977116547}
   animationTime: 1
-  splashScreenDuration: 2
-  splashScreenTransitionTime: 0.5
+  splashScreenTime: 0.5
+  splashMinTime: 1.75
   animBoolName: enable
 --- !u!114 &1271028208
 MonoBehaviour:
@@ -1166,6 +1166,36 @@ Prefab:
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 224000010024917056, guid: 093baf772bcc6dd49aa56a9ca2ead4df,
+        type: 2}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -179
+      objectReference: {fileID: 0}
+    - target: {fileID: 224000013577538244, guid: 093baf772bcc6dd49aa56a9ca2ead4df,
+        type: 2}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 179
+      objectReference: {fileID: 0}
+    - target: {fileID: 224000011189923904, guid: 093baf772bcc6dd49aa56a9ca2ead4df,
+        type: 2}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -179
+      objectReference: {fileID: 0}
+    - target: {fileID: 224000011060734924, guid: 093baf772bcc6dd49aa56a9ca2ead4df,
+        type: 2}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 179
+      objectReference: {fileID: 0}
+    - target: {fileID: 224000012512710338, guid: 093baf772bcc6dd49aa56a9ca2ead4df,
+        type: 2}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 179
+      objectReference: {fileID: 0}
+    - target: {fileID: 224000014111922826, guid: 093baf772bcc6dd49aa56a9ca2ead4df,
+        type: 2}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -179
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 093baf772bcc6dd49aa56a9ca2ead4df, type: 2}

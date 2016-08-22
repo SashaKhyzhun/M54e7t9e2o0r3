@@ -7,6 +7,7 @@ public static class SaveLoad
 {
     public static string fileName;
     public static string fileExtention;
+    public static bool loadFinished;
 
     private static Game savedGame;
 
@@ -67,6 +68,7 @@ public static class SaveLoad
         {
             Debug.Log("Loading failed");
         }
+        loadFinished = true;
         //ChooseSavedGame();
         //GameObject.FindGameObjectWithTag("GameController").SendMessage("LoadStats");
     }

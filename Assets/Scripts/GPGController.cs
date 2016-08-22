@@ -18,6 +18,7 @@ public class GPGController : MonoBehaviour
 {
     public bool pauseOnLogin;
     public static bool NoGPGMode;
+    public static float timeOutTime = 25f;
 
     public int best { get; set; }
 
@@ -105,7 +106,7 @@ public class GPGController : MonoBehaviour
             currMode.Enqueue(mode);
             ISavedGameClient savedGameClient = PlayGamesPlatform.Instance.SavedGame;
             savedGameClient.OpenWithAutomaticConflictResolution(filename, DataSource.ReadCacheOrNetwork,
-                ConflictResolutionStrategy.UseLongestPlaytime, OnSavedGameOpened);
+                ConflictResolutionStrategy.UseOriginal, OnSavedGameOpened);
             //Time.timeScale = 0f;
         }
     }
@@ -113,6 +114,7 @@ public class GPGController : MonoBehaviour
     static void OnSavedGameOpened(SavedGameRequestStatus status, ISavedGameMetadata game)
     {
         Debug.Log("OnSavedGameOpened open mode " + currMode.Peek());
+        Debug.Log("Status " + status);
         if (status == SavedGameRequestStatus.Success)
         {
             if (currMode.Peek() == OpenMode.Save)
@@ -134,7 +136,7 @@ public class GPGController : MonoBehaviour
             {
                 Debug.Log("Cannot open save to load");
             }
-            else if (currMode.Peek() == OpenMode.Load)
+            else if (currMode.Peek() == OpenMode.Save)
             {
                 Debug.Log("Cannot open save to save");
             }
@@ -143,6 +145,7 @@ public class GPGController : MonoBehaviour
                 Debug.Log("No OpenMode Provided");
             }
             //Time.timeScale = 1f;
+            SaveLoad.loadFinished = true;
         }
         currMode.Dequeue();
     }
