@@ -33,7 +33,7 @@ public class SaveSystemBidge : MonoBehaviour
             Game.current.characters[i].selected = characters[i].selected;
         }
         Game.current.currentCharacter = currentCharacter;
-        SaveLoad.Save();                                                    // then save to file
+        //SaveLoad.Save();                                                    // then save to file
     }
 
     public void SaveBackrounds(BackgroundSkin[] backgrounds, int currentBackground) // same as above
@@ -44,19 +44,19 @@ public class SaveSystemBidge : MonoBehaviour
             Game.current.backgrounds[i].selected = backgrounds[i].selected;
         }
         Game.current.currentBackground = currentBackground;
-        SaveLoad.Save();
+        //SaveLoad.Save();
     }
 
     public void SaveBest(int best)                                                  // so is below
     {
         Game.current.best = best;
-        SaveLoad.Save();
+        //SaveLoad.Save();
     }
 
     public void SaveCoins(int coins)
     {
         Game.current.coins = coins;
-        SaveLoad.Save();
+        //SaveLoad.Save();
     }
 
     public void SaveAll(CharacterSkin[] characters, int currentCharacter,           // do it all at once
@@ -66,7 +66,7 @@ public class SaveSystemBidge : MonoBehaviour
         SaveBackrounds(backgrounds, currentBackground);
         SaveBest(best);
         SaveCoins(coins);
-        SaveLoad.Save();
+        //SaveLoad.Save();
     }
     #endregion
 
