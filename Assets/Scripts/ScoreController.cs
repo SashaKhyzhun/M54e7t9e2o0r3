@@ -51,6 +51,7 @@ public class ScoreController : MonoBehaviour
             }
             //save changes
             saveSystemBridge.SaveCoins(coinScore);
+            SaveLoad.Save();
         }
     }
 
@@ -104,6 +105,7 @@ public class ScoreController : MonoBehaviour
         {
             best = meteorScore;
             saveSystemBridge.SaveBest(best);
+            SaveLoad.Save();
             SetText(bestText, best);
         }
     }

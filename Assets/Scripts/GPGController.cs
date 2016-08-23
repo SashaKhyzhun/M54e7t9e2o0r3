@@ -53,7 +53,7 @@ public class GPGController : MonoBehaviour
 
         PlayGamesPlatform.InitializeInstance(config);
         // recommended for debugging:
-        PlayGamesPlatform.DebugLogEnabled = false;
+        PlayGamesPlatform.DebugLogEnabled = true;
         // Activate the Google Play Games platform
         PlayGamesPlatform.Activate();
     }
@@ -105,7 +105,7 @@ public class GPGController : MonoBehaviour
         {
             currMode.Enqueue(mode);
             ISavedGameClient savedGameClient = PlayGamesPlatform.Instance.SavedGame;
-            savedGameClient.OpenWithAutomaticConflictResolution(filename, DataSource.ReadCacheOrNetwork,
+            savedGameClient.OpenWithAutomaticConflictResolution(filename, DataSource.ReadNetworkOnly,
                 ConflictResolutionStrategy.UseOriginal, OnSavedGameOpened);
             //Time.timeScale = 0f;
         }

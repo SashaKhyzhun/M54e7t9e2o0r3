@@ -100,6 +100,6 @@ public static class SaveLoad
             Game.current = Game.local;
             Debug.Log("i chose local, because cloud is null");
         }
-        Save();
+        //Save();
     }
 }
