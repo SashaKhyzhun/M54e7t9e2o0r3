@@ -121,6 +121,14 @@ public class GPGController : MonoBehaviour
             {
                 Debug.Log("Starting to save");
                 byte[] bytes = System.IO.File.ReadAllBytes(Application.persistentDataPath + "/" + SaveLoad.fileName + "." + SaveLoad.fileExtention);
+
+                System.Runtime.Serialization.Formatters.Binary.BinaryFormatter bf = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
+                System.IO.FileStream file = System.IO.File.Open(Application.persistentDataPath + "/" + SaveLoad.fileName + "." + SaveLoad.fileExtention, System.IO.FileMode.Open);
+                Game savedGame = (Game)bf.Deserialize(file);
+                Debug.Log(string.Format(" savedGame.name = {0} \n savedGame.timeStamp = {1} \n savedGame.coins = {2} \n savedGame.best = {3} \n savedGame.currentCharacter = {4}",
+                savedGame.name, savedGame.timeStamp, savedGame.coins, savedGame.best, savedGame.currentCharacter));
+                file.Close();
+
                 SaveGame(game, bytes);
             }
             else if (currMode.Peek() == OpenMode.Load)

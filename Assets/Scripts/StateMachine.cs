@@ -189,7 +189,7 @@ public class StateMachine : MonoBehaviour
         gpgController.SubmitScore(Game.current.best);
         scoreController.LoadStats();
         skinChanger.LoadStats();
-        SaveLoad.Save();
+        //SaveLoad.Save();
         animationContoller.SplashScreenToggle(false);
         state = States.Intermediate;
         yield return splashWFS;

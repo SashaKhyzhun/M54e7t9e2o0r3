@@ -64,6 +64,8 @@ public static class SaveLoad
             Game.cloud = savedGame;
             file.Close();
             Debug.Log("Loading was successful");
+            Debug.Log(string.Format(" Game.cloud.name = {0} \n Game.cloud.timeStamp = {1} \n Game.cloud.coins = {2} \n Game.cloud.best = {3} \n Game.cloud.currentCharacter = {4}",
+                Game.cloud.name, Game.cloud.timeStamp, Game.cloud.coins, Game.cloud.best, Game.cloud.currentCharacter));
         }
         else
         {
@@ -78,28 +80,32 @@ public static class SaveLoad
         if (Game.local == null)
         {
             Game.current = new Game();
-            Game.current.timeStamp = Game.current.timeStamp.Subtract(new TimeSpan(36500, 0, 0, 0, 0)); 
+            Game.current.timeStamp = Game.current.timeStamp.Subtract(new TimeSpan(36500, 0, 0, 0, 0));
             Game.local = Game.current;
+            Debug.Log("i chose local");
         }
-        if (Game.local != null && Game.cloud != null)
+        if (Game.cloud != null)
         {
-            int i = DateTime.Compare(Game.local.timeStamp, Game.cloud.timeStamp);
-            if (i > 0)
-            {
-                Game.current = Game.local;
-                Debug.Log("i chose local");
-            }
-            else
-            {
-                Game.current = Game.cloud;
-                Debug.Log("i chose cloud");
-            }
+            Game.current = Game.cloud;
+            Debug.Log("i chose cloud");
         }
         else
         {
             Game.current = Game.local;
             Debug.Log("i chose local, because cloud is null");
         }
+        //if (Game.local != null && Game.cloud != null)
+        //{
+        //    int i = DateTime.Compare(Game.local.timeStamp, Game.cloud.timeStamp);
+        //    if (i > 0)
+        //    {
+        //        Game.current = Game.local;
+        //    }
+        //    else
+        //    {
+        //        Game.current = Game.cloud;
+        //    }
+        //}
         //Save();
     }
 }
