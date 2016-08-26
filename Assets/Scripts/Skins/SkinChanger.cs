@@ -6,18 +6,20 @@ public class SkinChanger : MonoBehaviour
     public SaveSystemBidge saveSystemBridge;
     public ScoreController scoreController;
     public SpriteRenderer background;
-    
+
     public CharacterSkin[] characters;
     private int currentCharacterSkin = 0;
-    
+
     public BackgroundSkin[] backgrounds;
     private int currentBackground = 0;
+
+    private bool statsLoaded;
 
     void Start()
     {
         //if (GPGController.NoGPGMode)
         //{
-            LoadStats();
+        //LoadStats();
         //}
         //load changes
         //get current indices and ChangePlayer and ChangeBackground by that index
@@ -46,7 +48,7 @@ public class SkinChanger : MonoBehaviour
             backgrounds[i].selected = false;
             backgrounds[currentBackground].selected = true;
             backgrounds[i].UpdateGfx();
-        } 
+        }
         //should be called when gamestate changes to settings
         //change appearence of buttons
     }
@@ -60,6 +62,7 @@ public class SkinChanger : MonoBehaviour
                 scoreController.SpendCoins(characters[index].cost);
             }
             ChangePlayer(index);
+            SaveLoad.Save();
         }
         else
         {
@@ -76,6 +79,7 @@ public class SkinChanger : MonoBehaviour
                 scoreController.SpendCoins(backgrounds[index].cost);
             }
             ChangeBackground(index);
+            SaveLoad.Save();
         }
         else
         {

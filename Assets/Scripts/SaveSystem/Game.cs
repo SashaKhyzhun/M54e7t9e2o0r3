@@ -6,6 +6,7 @@ public class Game
     public static Game current;
     public static Game local;
     public static Game cloud;
+    public static string defaultName = "save";
     public static int characterCount;
     public static int backgroundCount;
 
@@ -45,6 +46,6 @@ public class Game
         best = 0;
 
         timeStamp = DateTime.Now;
-        name = "save";                      // and name
+        name = defaultName;                      // and name
     }
 }

@@ -19,12 +19,16 @@ public class StateMachine : MonoBehaviour
     public States state;
     public AnimationController animationContoller;
     public ScoreController scoreController;
+    public GPGController gpgController;
     public PlayerController playerController;
     public SkinChanger skinChanger;
     public Button catcher;
 
     private Coroutine currentCoroutine;
     private WaitForSeconds animWFS;
+    private WaitForSeconds splashWFS;
+    private WaitForSeconds splashMinWFS;
+    private WaitForEndOfFrame wfeof;
     private States prevState;
 
     void Awake()
@@ -34,7 +38,11 @@ public class StateMachine : MonoBehaviour
 
     void Start()
     {
+        Screen.sleepTimeout = SleepTimeout.NeverSleep;
         animWFS = new WaitForSeconds(animationContoller.animationTime);
+        splashWFS = new WaitForSeconds(animationContoller.splashScreenTime);
+        splashMinWFS = new WaitForSeconds(animationContoller.splashMinTime);
+        wfeof = new WaitForEndOfFrame();
         StartToMenu();
     }
 
@@ -163,9 +171,28 @@ public class StateMachine : MonoBehaviour
 
     IEnumerator StartToMenuCoroutine()
     {
+        float elapsed = 0;
+        bool timeout = false;
         state = States.Intermediate;
-        animationContoller.SplashScreenPlay();
-        yield return new WaitForSeconds(animationContoller.splashScreenDuration);
+        animationContoller.SplashScreenToggle(true);
+        yield return splashWFS;
+        state = States.Start;
+        yield return splashMinWFS;
+        while (!(GPGController.NoGPGMode || timeout || SaveLoad.loadFinished))
+        {
+            yield return wfeof;
+            elapsed += Time.deltaTime;
+            if (elapsed >= GPGController.timeOutTime)
+                timeout = true;
+        }
+        SaveLoad.ChooseSavedGame();
+        gpgController.SubmitScore(Game.current.best);
+        scoreController.LoadStats();
+        skinChanger.LoadStats();
+        //SaveLoad.Save();
+        animationContoller.SplashScreenToggle(false);
+        state = States.Intermediate;
+        yield return splashWFS;
         animationContoller.MenuToggle(true);
         yield return animWFS;
         state = States.Menu;

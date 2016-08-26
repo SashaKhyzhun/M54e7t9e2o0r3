@@ -11,12 +11,13 @@ public class AnimationController : MonoBehaviour
     public Animator gameOverLayout;
 
     public float animationTime = 0.5f;
-    public float splashScreenDuration = 4.5f;
+    public float splashScreenTime = 4.5f;
+    public float splashMinTime = 1f;
     public string animBoolName = "enable";
 
-    public void SplashScreenPlay()
+    public void SplashScreenToggle(bool toggle)
     {
-        splashScreenLayout.SetTrigger(animBoolName);
+        splashScreenLayout.SetBool(animBoolName, toggle);
     }
 
     //	public void TutorialToggle (bool toggle)

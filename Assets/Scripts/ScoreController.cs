@@ -23,7 +23,7 @@ public class ScoreController : MonoBehaviour
         //coinScore = 0; //load changes instead
         //if (GPGController.NoGPGMode)
         //{
-        LoadStats();
+        //LoadStats();
         //}
         meteorScore = 0;
         SetText(meteorText, meteorScore);
@@ -51,6 +51,7 @@ public class ScoreController : MonoBehaviour
             }
             //save changes
             saveSystemBridge.SaveCoins(coinScore);
+            SaveLoad.Save();
         }
     }
 
@@ -104,6 +105,7 @@ public class ScoreController : MonoBehaviour
         {
             best = meteorScore;
             saveSystemBridge.SaveBest(best);
+            SaveLoad.Save();
             SetText(bestText, best);
         }
     }
