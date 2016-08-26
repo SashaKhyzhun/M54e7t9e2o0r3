@@ -10,8 +10,7 @@ public enum OpenMode
 {
     Save,
     Load,
-    None
-}
+    None}
 ;
 
 public class GPGController : MonoBehaviour
@@ -92,7 +91,8 @@ public class GPGController : MonoBehaviour
         if (!NoGPGMode)
         {
             Social.ReportScore(score, Constants.leaderboard_meteor_dodge_top_players, (bool success) =>
-                { });
+                {
+                });
         }
     }
 
@@ -105,8 +105,8 @@ public class GPGController : MonoBehaviour
         {
             currMode.Enqueue(mode);
             ISavedGameClient savedGameClient = PlayGamesPlatform.Instance.SavedGame;
-            savedGameClient.OpenWithAutomaticConflictResolution(filename, DataSource.ReadCacheOrNetwork,
-                ConflictResolutionStrategy.UseOriginal, OnSavedGameOpened);
+            savedGameClient.OpenWithAutomaticConflictResolution(filename, DataSource.ReadNetworkOnly,
+                ConflictResolutionStrategy.UseUnmerged, OnSavedGameOpened);
             //Time.timeScale = 0f;
         }
     }
@@ -126,7 +126,7 @@ public class GPGController : MonoBehaviour
                 System.IO.FileStream file = System.IO.File.Open(Application.persistentDataPath + "/" + SaveLoad.fileName + "." + SaveLoad.fileExtention, System.IO.FileMode.Open);
                 Game savedGame = (Game)bf.Deserialize(file);
                 Debug.Log(string.Format(" savedGame.name = {0} \n savedGame.timeStamp = {1} \n savedGame.coins = {2} \n savedGame.best = {3} \n savedGame.currentCharacter = {4}",
-                savedGame.name, savedGame.timeStamp, savedGame.coins, savedGame.best, savedGame.currentCharacter));
+                        savedGame.name, savedGame.timeStamp, savedGame.coins, savedGame.best, savedGame.currentCharacter));
                 file.Close();
 
                 SaveGame(game, bytes);
@@ -201,22 +201,22 @@ public class GPGController : MonoBehaviour
     public void GetBestScore(ILeaderboard lb)
     {
         lb.LoadScores(ok =>
-        {
-            hasBest = ok;
-            if (ok)
             {
-                best = (int)lb.localUserScore.value;
-                if (pauseOnLogin)
-                    Time.timeScale = 1;
-                Debug.Log("best is " + best);
-            }
-            else
-            {
-                if (pauseOnLogin)
-                    Time.timeScale = 1;
-                Debug.Log("best load failed");
-            }
-        });
+                hasBest = ok;
+                if (ok)
+                {
+                    best = (int)lb.localUserScore.value;
+                    if (pauseOnLogin)
+                        Time.timeScale = 1;
+                    Debug.Log("best is " + best);
+                }
+                else
+                {
+                    if (pauseOnLogin)
+                        Time.timeScale = 1;
+                    Debug.Log("best load failed");
+                }
+            });
     }
 
 

@@ -43,13 +43,16 @@ public static class SaveLoad
             Game.local = savedGame;
             //if (GPGController.NoGPGMode)
             //{
-            Game.current = savedGame;
+            //Game.current = savedGame;
 
             //}
             file.Close();
             return true;
         }
-        else { return false; }
+        else
+        {
+            return false;
+        }
     }
 
     public static void LoadCloud(byte[] data, bool success)
@@ -65,7 +68,7 @@ public static class SaveLoad
             file.Close();
             Debug.Log("Loading was successful");
             Debug.Log(string.Format(" Game.cloud.name = {0} \n Game.cloud.timeStamp = {1} \n Game.cloud.coins = {2} \n Game.cloud.best = {3} \n Game.cloud.currentCharacter = {4}",
-                Game.cloud.name, Game.cloud.timeStamp, Game.cloud.coins, Game.cloud.best, Game.cloud.currentCharacter));
+                    Game.cloud.name, Game.cloud.timeStamp, Game.cloud.coins, Game.cloud.best, Game.cloud.currentCharacter));
         }
         else
         {
