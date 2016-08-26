@@ -18,6 +18,7 @@ public class StateMachine : MonoBehaviour
 
     public States state;
     public AnimationController animationContoller;
+    public AudioManager audioManager;
     public ScoreController scoreController;
     public GPGController gpgController;
     public PlayerController playerController;
@@ -46,6 +47,7 @@ public class StateMachine : MonoBehaviour
         StartToMenu();
     }
 
+    #region public_methods
     public void StartToMenu()
     {
         if (currentCoroutine == null)
@@ -168,7 +170,9 @@ public class StateMachine : MonoBehaviour
                 break;
         }
     }
+    #endregion
 
+    #region coroutines
     IEnumerator StartToMenuCoroutine()
     {
         float elapsed = 0;
@@ -177,6 +181,7 @@ public class StateMachine : MonoBehaviour
         animationContoller.SplashScreenToggle(true);
         yield return splashWFS;
         state = States.Start;
+        audioManager.splashSound.Play();
         yield return splashMinWFS;
         while (!(GPGController.NoGPGMode || timeout || SaveLoad.loadFinished))
         {
@@ -196,6 +201,7 @@ public class StateMachine : MonoBehaviour
         animationContoller.MenuToggle(true);
         yield return animWFS;
         state = States.Menu;
+        audioManager.backgroundSound.Play();
         currentCoroutine = null;
     }
 
@@ -279,6 +285,7 @@ public class StateMachine : MonoBehaviour
         state = States.Intermediate;
         catcher.interactable = false;
         animationContoller.GameOverToggle(true);
+        audioManager.GameOverToggle(true);
         yield return animWFS;
         state = States.GameOver;
         currentCoroutine = null;
@@ -288,6 +295,7 @@ public class StateMachine : MonoBehaviour
     {
         state = States.Intermediate;
         animationContoller.GameOverToggle(false);
+        audioManager.GameOverToggle(false);
         yield return animWFS;
         /////
         scoreController.ResetScore();
@@ -322,4 +330,5 @@ public class StateMachine : MonoBehaviour
         state = States.GameOver;
         currentCoroutine = null;
     }
+    #endregion
 }

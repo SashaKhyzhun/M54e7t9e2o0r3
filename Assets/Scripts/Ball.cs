@@ -32,7 +32,7 @@ public class Ball : ProjectileController
         {
             scoreController.MeteorScoreUp();
         }
-
+        audioManager.PlayRandomMeteorSound();
         StartCoroutine(KillCoroutine());
     }
 

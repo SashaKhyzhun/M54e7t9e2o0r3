@@ -4,6 +4,7 @@ using System.Collections;
 public class Spawn : MonoBehaviour
 {
 
+    public AudioManager audioManager;
     public ScoreController scoreController;
     public GameObject projectilePrefab;
     //meteor prefab
@@ -123,6 +124,7 @@ public class Spawn : MonoBehaviour
             currProjectile.transform.SetParent(ProjectilePool.transform); // parenting to pool
             currProjectile.transform.localPosition = Vector3.zero; // teleporting ball to pool's position
             currProjectileController = currProjectile.GetComponent<ProjectileController>();
+            currProjectileController.audioManager = audioManager;
             currProjectileController.scoreController = scoreController;
             currProjectile.SetActive(false); // deactivating for now
         }
