@@ -8,6 +8,7 @@ public class AudioManager : MonoBehaviour
     public AudioSource backgroundSound;
     public AudioSource coinSound;
     public AudioSource[] meteorSounds;
+    public AudioSource[] meteorFlybySounds;
 
     public Sprite onGfx;
     public Sprite offGfx;
@@ -78,9 +79,16 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    public void PlayRandomMeteorSound()
+    public AudioClip GetRandomMeteorClip()
     {
         int i = Random.Range(0, meteorSounds.Length - 1);
-        meteorSounds[i].Play();
+        return meteorSounds[i].clip;
+    }
+
+    public AudioClip GetRandomMeteorFlybyClip()
+    {
+        int i = Random.Range(0, meteorFlybySounds.Length - 1);
+        Debug.Log(i);
+        return meteorFlybySounds[i].clip;
     }
 }

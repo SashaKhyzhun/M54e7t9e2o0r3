@@ -94,7 +94,12 @@ public class Spawn : MonoBehaviour
         currProjectile.transform.rotation = myTransform.rotation;
         currProjectileRb.angularVelocity = 0;
         currProjectileRb.velocity = Vector2.down * speed;
-
+        currProjectileController = currProjectile.GetComponent<ProjectileController>();
+        if (currProjectileController is Ball)
+        {
+            Ball b = currProjectileController as Ball;
+            b.GetSoundStartHeight(speed, (b.flybySound.clip.length * (1 / b.flybySound.pitch)));
+        }
         // cooldown
         //}
 
