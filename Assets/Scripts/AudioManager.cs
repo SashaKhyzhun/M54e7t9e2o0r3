@@ -88,7 +88,6 @@ public class AudioManager : MonoBehaviour
     public AudioClip GetRandomMeteorFlybyClip()
     {
         int i = Random.Range(0, meteorFlybySounds.Length - 1);
-        Debug.Log(i);
         return meteorFlybySounds[i].clip;
     }
 }

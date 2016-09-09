@@ -231,7 +231,7 @@ AudioSource:
   m_audioClip: {fileID: 8300000, guid: 5c2905e1190cfb6468c2618e808b68e5, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
-  m_Pitch: 1
+  m_Pitch: 2
   Loop: 0
   Mute: 0
   Spatialize: 0
@@ -455,8 +455,8 @@ AudioSource:
     type: 2}
   m_audioClip: {fileID: 8300000, guid: 1454aa343f5cf2544a5eed44899f78d2, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.5
-  m_Pitch: 2
+  m_Volume: 0.01
+  m_Pitch: 3
   Loop: 0
   Mute: 0
   Spatialize: 0
@@ -794,8 +794,8 @@ AudioSource:
     type: 2}
   m_audioClip: {fileID: 8300000, guid: cae8f9c832c08634cbece32cc95a7524, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.5
-  m_Pitch: 2
+  m_Volume: 0.01
+  m_Pitch: 3
   Loop: 0
   Mute: 0
   Spatialize: 0
@@ -904,8 +904,8 @@ AudioSource:
     type: 2}
   m_audioClip: {fileID: 8300000, guid: 288b3bc8af745e74da31845af3e481e1, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.5
-  m_Pitch: 2
+  m_Volume: 0.01
+  m_Pitch: 3
   Loop: 0
   Mute: 0
   Spatialize: 0
@@ -1036,8 +1036,8 @@ AudioSource:
     type: 2}
   m_audioClip: {fileID: 8300000, guid: d599f5b63eb97e3488da8a08bdf1e07d, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.5
-  m_Pitch: 2
+  m_Volume: 0.01
+  m_Pitch: 3
   Loop: 0
   Mute: 0
   Spatialize: 0
@@ -1537,7 +1537,6 @@ MonoBehaviour:
   - {fileID: 51327837}
   meteorFlybySounds:
   - {fileID: 280939203}
-  - {fileID: 796881395}
   - {fileID: 1091261417}
   - {fileID: 637162755}
   onGfx: {fileID: 21300224, guid: 4f41c3fedca5fc44785e115624ab525d, type: 3}
