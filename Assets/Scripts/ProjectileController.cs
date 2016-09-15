@@ -3,6 +3,7 @@ using System.Collections;
 
 public class ProjectileController : MonoBehaviour {
 
+    public AudioManager audioManager;
     public ScoreController scoreController;
 
     public float lifeSpan = 5;

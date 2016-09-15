@@ -24,7 +24,7 @@ public class GeneralSharing : MonoBehaviour
         intentObject.Call<AndroidJavaObject>("putExtra", intentClass.GetStatic<string>("EXTRA_TEXT"), text);
 		
         AndroidJavaClass uriClass = new AndroidJavaClass("android.net.Uri");
-        AndroidJavaClass fileClass = new AndroidJavaClass("java.io.File");
+        //AndroidJavaClass fileClass = new AndroidJavaClass("java.io.File");
 		
         AndroidJavaObject fileObject = new AndroidJavaObject("java.io.File", path);// Set Image Path Here
 		
