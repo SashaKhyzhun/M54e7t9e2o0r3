@@ -9,6 +9,7 @@ public class AnimationController : MonoBehaviour
     public Animator menuLayout;
     public Animator gameLayout;
     public Animator gameOverLayout;
+    public Animator tooltip;
 
     public float animationTime = 0.5f;
     public float splashScreenTime = 4.5f;
@@ -19,11 +20,6 @@ public class AnimationController : MonoBehaviour
     {
         splashScreenLayout.SetBool(animBoolName, toggle);
     }
-
-    //	public void TutorialToggle (bool toggle)
-    //	{
-    //		tutorialLayout.SetBool(animBoolName, toggle);
-    //	}
 
     public void SettingsToggle(bool toggle)
     {
@@ -48,6 +44,11 @@ public class AnimationController : MonoBehaviour
     public void TutorialToggle(bool toggle)
     {
         tutorialLayout.SetBool(animBoolName, toggle);
+    }
+
+    public void TooltipToggle(bool toggle)
+    {
+        tooltip.SetBool(animBoolName, toggle);
     }
 }
 

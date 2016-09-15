@@ -31,6 +31,8 @@ public class StateMachine : MonoBehaviour
     private WaitForSeconds splashMinWFS;
     private WaitForEndOfFrame wfeof;
     private States prevState;
+    private bool tooltipShown = false;
+    private bool tooltipOn = false;
 
     void Awake()
     {
@@ -170,6 +172,31 @@ public class StateMachine : MonoBehaviour
                 break;
         }
     }
+
+    void CheckTooltip()
+    {
+        if (!tooltipOn)
+        {
+            if (scoreController.canBuy())
+            {
+                if (!tooltipShown)
+                {
+                    animationContoller.TooltipToggle(true);
+                    tooltipShown = true;
+                    tooltipOn = true;
+                }
+            }
+            else
+            {
+                tooltipShown = false;
+            }
+        }
+        else
+        {
+            tooltipOn = false;
+            animationContoller.TooltipToggle(false);
+        }
+    }
     #endregion
 
     #region coroutines
@@ -267,6 +294,7 @@ public class StateMachine : MonoBehaviour
         animationContoller.GameOverToggle(true);
         animationContoller.GameToggle(true);
         yield return animWFS;
+        CheckTooltip();
         state = States.GameOver;
         currentCoroutine = null;
     }
@@ -276,6 +304,7 @@ public class StateMachine : MonoBehaviour
         state = States.Intermediate;
         animationContoller.TutorialToggle(false);
         yield return animWFS;
+        CheckTooltip();
         state = States.GameOver;
         currentCoroutine = null;
     }
@@ -286,7 +315,10 @@ public class StateMachine : MonoBehaviour
         catcher.interactable = false;
         animationContoller.GameOverToggle(true);
         audioManager.GameOverToggle(true);
+        //HERE:
+        //check for tooltip show conditions
         yield return animWFS;
+        CheckTooltip();
         state = States.GameOver;
         currentCoroutine = null;
     }
@@ -296,10 +328,12 @@ public class StateMachine : MonoBehaviour
         state = States.Intermediate;
         animationContoller.GameOverToggle(false);
         audioManager.GameOverToggle(false);
+        playerController.GoToCenter();
+        CheckTooltip();
         yield return animWFS;
         /////
-        scoreController.ResetScore();
         playerController.Revive();
+        scoreController.ResetScore();
         /////
         animationContoller.GameToggle(true);
         yield return animWFS;
@@ -314,6 +348,7 @@ public class StateMachine : MonoBehaviour
         skinChanger.RefreshSettings();
         animationContoller.GameOverToggle(false);
         animationContoller.GameToggle(false);
+        CheckTooltip();
         yield return animWFS;
         animationContoller.SettingsToggle(true);
         yield return animWFS;
@@ -326,6 +361,7 @@ public class StateMachine : MonoBehaviour
     {
         state = States.Intermediate;
         animationContoller.TutorialToggle(true);
+        CheckTooltip();
         yield return animWFS;
         state = States.GameOver;
         currentCoroutine = null;

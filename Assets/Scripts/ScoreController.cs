@@ -13,6 +13,8 @@ public class ScoreController : MonoBehaviour
     public Text meteorText;
     public Text bestText; // ever
     public ShareInfo gameOverShareInfo;
+    public float minSkinCost = 5f;
+
 
     private int coinScore;
     private int meteorScore;
@@ -73,7 +75,7 @@ public class ScoreController : MonoBehaviour
 
     public void GetCoins() // for debug purposes
     {
-        coinScore += 10;
+        coinScore += 5;
         for (int i = 0; i < coinTexts.Length; i++)
         {
             SetText(coinTexts[i], coinScore);
@@ -127,6 +129,11 @@ public class ScoreController : MonoBehaviour
     {
         meteorScore = 0;
         SetText(meteorText, meteorScore);
+    }
+
+    public bool canBuy()
+    {
+        return coinScore >= minSkinCost;
     }
 
 

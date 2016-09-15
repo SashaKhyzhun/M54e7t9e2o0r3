@@ -85,6 +85,11 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void GoToCenter()
+    {
+        transform.position += new Vector3(-transform.position.x, 0, 0);
+    }
+
     public void UpdateAnimator()
     {
         anim = GetComponent<Animator>();
