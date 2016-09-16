@@ -71,16 +71,16 @@ public class GPGController : MonoBehaviour
                     if (pauseOnLogin)
                         Time.timeScale = 1;
                     GetBestScore(lb);
-                    Debug.Log("You've successfuly logged in");
+                    //Debug.Log("You've successfuly logged in");
                 }
                 else
                 {
                     NoGPGMode = true;
                     if (pauseOnLogin)
                         Time.timeScale = 1;
-                    Debug.Log("Log in failed!");
+                    //Debug.Log("Log in failed!");
                 }
-                Debug.Log("SaveLoad.Load() from Sign In callback function");
+                //Debug.Log("SaveLoad.Load() from Sign In callback function");
                 SaveLoad.Load();
             });
     }
@@ -113,27 +113,27 @@ public class GPGController : MonoBehaviour
 
     static void OnSavedGameOpened(SavedGameRequestStatus status, ISavedGameMetadata game)
     {
-        Debug.Log("OnSavedGameOpened open mode " + currMode.Peek());
-        Debug.Log("Status " + status);
+        //Debug.Log("OnSavedGameOpened open mode " + currMode.Peek());
+        //Debug.Log("Status " + status);
         if (status == SavedGameRequestStatus.Success)
         {
             if (currMode.Peek() == OpenMode.Save)
             {
-                Debug.Log("Starting to save");
+                //Debug.Log("Starting to save");
                 byte[] bytes = System.IO.File.ReadAllBytes(Application.persistentDataPath + "/" + SaveLoad.fileName + "." + SaveLoad.fileExtention);
 
                 System.Runtime.Serialization.Formatters.Binary.BinaryFormatter bf = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
                 System.IO.FileStream file = System.IO.File.Open(Application.persistentDataPath + "/" + SaveLoad.fileName + "." + SaveLoad.fileExtention, System.IO.FileMode.Open);
                 Game savedGame = (Game)bf.Deserialize(file);
-                Debug.Log(string.Format(" savedGame.name = {0} \n savedGame.timeStamp = {1} \n savedGame.coins = {2} \n savedGame.best = {3} \n savedGame.currentCharacter = {4}",
-                        savedGame.name, savedGame.timeStamp, savedGame.coins, savedGame.best, savedGame.currentCharacter));
+                //Debug.Log(string.Format(" savedGame.name = {0} \n savedGame.timeStamp = {1} \n savedGame.coins = {2} \n savedGame.best = {3} \n savedGame.currentCharacter = {4}",
+                //        savedGame.name, savedGame.timeStamp, savedGame.coins, savedGame.best, savedGame.currentCharacter));
                 file.Close();
 
                 SaveGame(game, bytes);
             }
             else if (currMode.Peek() == OpenMode.Load)
             {
-                Debug.Log("starting to load");
+                //Debug.Log("starting to load");
                 LoadGameData(game);
             }
             //Time.timeScale = 1f;
@@ -142,15 +142,15 @@ public class GPGController : MonoBehaviour
         {
             if (currMode.Peek() == OpenMode.Load)
             {
-                Debug.Log("Cannot open save to load");
+                //Debug.Log("Cannot open save to load");
             }
             else if (currMode.Peek() == OpenMode.Save)
             {
-                Debug.Log("Cannot open save to save");
+                //Debug.Log("Cannot open save to save");
             }
             else
             {
-                Debug.Log("No OpenMode Provided");
+                //Debug.Log("No OpenMode Provided");
             }
             //Time.timeScale = 1f;
             SaveLoad.loadFinished = true;
@@ -173,11 +173,11 @@ public class GPGController : MonoBehaviour
     {
         if (status == SavedGameRequestStatus.Success)
         {
-            Debug.Log("Game saved successfuly");
+            //Debug.Log("Game saved successfuly");
         }
         else
         {
-            Debug.Log("Saving failed");
+            //Debug.Log("Saving failed");
         }
     }
 
@@ -208,13 +208,13 @@ public class GPGController : MonoBehaviour
                     best = (int)lb.localUserScore.value;
                     if (pauseOnLogin)
                         Time.timeScale = 1;
-                    Debug.Log("best is " + best);
+                    //Debug.Log("best is " + best);
                 }
                 else
                 {
                     if (pauseOnLogin)
                         Time.timeScale = 1;
-                    Debug.Log("best load failed");
+                    //Debug.Log("best load failed");
                 }
             });
     }
@@ -226,7 +226,7 @@ public class GPGController : MonoBehaviour
         if (!NoGPGMode)
         {
             PlayGamesPlatform.Instance.ShowLeaderboardUI(Constants.leaderboard_meteor_dodge_top_players);
-            Debug.Log("Opening the leaderboard...");
+            //Debug.Log("Opening the leaderboard...");
         }
     }
 

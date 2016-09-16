@@ -66,7 +66,7 @@ public class SkinChanger : MonoBehaviour
         }
         else
         {
-            Debug.Log("Can't afford " + characters[index].cost + " coins");
+            //Debug.Log("Can't afford " + characters[index].cost + " coins");
         }
     }
 
@@ -83,7 +83,7 @@ public class SkinChanger : MonoBehaviour
         }
         else
         {
-            Debug.Log("Can't afford " + backgrounds[index].cost + " coins");
+            //Debug.Log("Can't afford " + backgrounds[index].cost + " coins");
         }
     }
 
