@@ -2,6 +2,13 @@
 using System.Collections;
 using UnityEngine.UI;
 
+/*
+ * |---------------Created by:-------------------|
+ * |Dima Petrinko ----------- petrinko6@gmail.com|
+ * |Sasha Khyzhun ------- sasha.khyzhun@gmail.com|
+ * |---------------------------------------------|
+*/
+
 public enum States
 {
     Start,
